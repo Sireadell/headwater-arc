@@ -1,4 +1,4 @@
-// Builds site/data.json for the live page from the audit and the Arc memos.
+// Builds docs/data.json for the live page from the audit and the Arc memos.
 // Run: node scripts/buildSite.mjs
 import fs from 'node:fs';
 const audit = JSON.parse(fs.readFileSync('data/arc-audit.json', 'utf8'));
@@ -21,5 +21,5 @@ const flagged = audit.results.filter((r) => r.flaggedReviewers > 0).map((r) => (
 }));
 const clean = audit.results.filter((r) => r.flaggedReviewers === 0).map((r) => r.agentId);
 const noFunder = new Set(audit.results.flatMap((r) => r.reviewers.filter((x) => x.links.length === 0).map((x) => x.reviewer))).size;
-fs.writeFileSync('site/data.json', JSON.stringify({ summary: audit.summary, reviewersWithNoFunderFound: noFunder, cleanAgentIds: clean, flagged }, null, 1));
+fs.writeFileSync('docs/data.json', JSON.stringify({ summary: audit.summary, reviewersWithNoFunderFound: noFunder, cleanAgentIds: clean, flagged }, null, 1));
 console.log('flagged', flagged.length, 'withMemo', flagged.filter((f) => f.memoTx).length);

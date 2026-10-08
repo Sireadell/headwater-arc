@@ -85,7 +85,7 @@ Run the tests:
 npm test
 ```
 
-The results land in `data/arc-audit.json`. The live page is in `site/`.
+The results land in `data/arc-audit.json`. The live page is in `docs/`.
 
 ## Honesty notes
 
