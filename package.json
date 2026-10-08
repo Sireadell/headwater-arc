@@ -1,0 +1,13 @@
+{
+  "name": "headwater-arc",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Independent funding audit of the reviews on Arc's ERC-8004 agents. Arc Microgrants submission.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ethers": "^6.17.0"
+  }
+}

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Headwater on Arc</title>
+<meta name="description" content="Checks who paid for the reviews on Arc's AI agents, and records what it finds on Arc itself.">
+<style>
+:root{--bg:#0A0B0C;--surface:#111315;--border:#262A2D;--text:#ECEEEF;--mut:#8B9196;--accent:#C97A3D;--red:#E5484D;--amber:#F5A623;--green:#3DD68C}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#FAF9F7;--surface:#fff;--border:#E3E0DA;--text:#1B1D1F;--mut:#5F666B;--accent:#A85F27}}
+:root[data-theme="light"]{--bg:#FAF9F7;--surface:#fff;--border:#E3E0DA;--text:#1B1D1F;--mut:#5F666B;--accent:#A85F27}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:34px;letter-spacing:-.02em;margin:0 0 8px}
+h2{font-size:20px;margin:40px 0 12px;letter-spacing:-.01em}
+p{margin:0 0 12px}.mut{color:var(--mut)}
+a{color:var(--accent)}
+code,.mono{font-family:ui-monospace,Consolas,monospace;font-size:13px;word-break:break-all}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px}
+.stat b{display:block;font-size:30px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{color:var(--mut);font-size:13px}
+.q{border-left:3px solid var(--accent);padding:4px 0 4px 14px;margin:20px 0;font-size:18px}
+.search{display:flex;gap:8px;margin:12px 0}
+input{flex:1;min-width:0;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:16px}
+button{padding:10px 16px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-size:16px;cursor:pointer}
+#answer{min-height:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin:10px 0}
+.card summary{cursor:pointer;padding:14px;list-style:none;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.card summary::-webkit-details-marker{display:none}
+.tag{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--border)}
+.tag.all{color:var(--red);border-color:var(--red)}.tag.some{color:var(--amber);border-color:var(--amber)}
+.body{padding:0 14px 14px;border-top:1px solid var(--border)}
+.rev{margin-top:12px}.rev ul{margin:4px 0 6px 18px;padding:0}
+.ok{color:var(--green)}
+footer{margin-top:48px;color:var(--mut);font-size:14px}
+</style>
+</head>
+<body>
+<main>
+<h1>Headwater on Arc</h1>
+<p>Headwater checks who paid for the reviews on Arc's AI agents. It then writes what it finds onto Arc itself, so you can check the check.</p>
+<p class="mut">I built it because a rating is only worth something if the person giving it isn't the agent's own owner in disguise. It's the same trick as a seller who makes a second account to praise their own shop.</p>
+
+<div class="q">Did the people behind an agent pay for the reviews of that agent?</div>
+
+<div class="stats" id="stats"></div>
+
+<h2>Look up an agent</h2>
+<div class="search"><input id="q" inputmode="numeric" placeholder="Agent number, for example 346" aria-label="Agent number"><button id="go">Check</button></div>
+<div id="answer" class="mut">Type an agent number from 0 to 2313.</div>
+
+<h2>The 16 agents with a money link</h2>
+<p class="mut">Each one has a record on Arc. Open it and the wallets and the funding payment are written inside, in plain text.</p>
+<div id="list"></div>
+
+<h2>What this does not say</h2>
+<ul>
+<li>It is evidence, not an accusation. A link means one wallet sent money to another. It doesn't prove anyone cheated, and it doesn't read anyone's mind.</li>
+<li>I only follow the first payment into a wallet, up to two steps back. A reviewer funded some other way won't show a link.</li>
+<li>Wallets that made thousands of payments (exchanges, bridges, faucets) are ignored as funders, because being paid by one of them links you to nobody. 9 were set aside. If such a wallet is the agent's own owner, it still counts.</li>
+<li id="nofunder"></li>
+<li>The wallet I used to write these records (<a id="wl" href="#">0xb3FB...2B53</a>) is mine. It left one review, on agent 192. Agent 192 shows no link.</li>
+<li>I scanned Arc from block 10,000,000 to block <span id="tip"></span>. Payments before that aren't in view.</li>
+</ul>
+
+<h2>How the record on Arc works</h2>
+<p>For each agent with a link I sent one small transaction from my wallet to itself, with no money moved. The note inside is text: the agent number, the reviewer wallets, and the transaction that funded each one. Open any record above, then open the funding transaction named inside it. You'll see the same payment.</p>
+
+<footer>
+<p>Reads Arc's ERC-8004 registries and the network's USDC payment log. No outside indexer. <a href="https://github.com/Sireadell/headwater-arc">Source</a></p>
+</footer>
+</main>
+<script>
+const EX='https://explorer.arc.io';
+const W='0xb3FB14FEcac09efbD0C74Fc07d50d7eD1eef2B53';
+const short=a=>a.slice(0,8)+'…'+a.slice(-6);
+const addr=a=>`<a class="mono" href="${EX}/address/${a}">${short(a)}</a>`;
+const tx=h=>`<a class="mono" href="${EX}/tx/${h}">${h.slice(0,10)}…${h.slice(-6)}</a>`;
+const tag=f=>f.linked===f.reviewers?`<span class="tag all">all ${f.reviewers} reviewers linked</span>`:`<span class="tag some">${f.linked} of ${f.reviewers} reviewers linked</span>`;
+function card(f,open){
+  return `<details class="card" id="agent-${f.agentId}"${open?' open':''}><summary><b>Agent ${f.agentId}</b>${tag(f)}<span class="mut">record on Arc: ${tx(f.memoTx)}</span></summary><div class="body">
+  <p class="mut" style="margin-top:12px">Owner: ${addr(f.owner)}</p>
+  ${f.evidence.map(e=>`<div class="rev"><div>Reviewer ${addr(e.reviewer)}</div><ul>${e.reasons.map(r=>`<li>${r.why}</li>`).join('')}</ul>${e.fundingTx?`<div class="mut">Funding payment: ${tx(e.fundingTx)}</div>`:''}</div>`).join('')}
+  </div></details>`;
+}
+fetch('data.json').then(r=>r.json()).then(d=>{
+  const s=d.summary;
+  document.getElementById('stats').innerHTML=[
+    [s.reviewedAgents,'agents with reviews'],[s.noLinkFound,'no money link found'],[s.someLinked,'some reviewers linked'],[s.allLinked,'every reviewer linked']
+  ].map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+  document.getElementById('list').innerHTML=d.flagged.map(f=>card(f)).join('');
+  document.getElementById('nofunder').textContent=`${d.reviewersWithNoFunderFound} reviewers have no funding payment I could find at all, so they show no link either way.`;
+  document.getElementById('tip').textContent=s.window.toBlock.toLocaleString('en-US');
+  document.getElementById('wl').href=`${EX}/address/${W}`;
+  const clean=new Set(d.cleanAgentIds);
+  function look(){
+    const v=document.getElementById('q').value.trim(),a=document.getElementById('answer');
+    if(!/^\d+$/.test(v)){a.textContent='Type an agent number from 0 to 2313.';return}
+    const n=+v,f=d.flagged.find(x=>x.agentId===n);
+    if(f){a.innerHTML=card(f,true)}
+    else if(clean.has(n)){a.innerHTML=`<span class="ok">Agent ${n}: reviewed, and no money link found.</span> That means none of its reviewers was paid by the agent's owner or wallet within the window checked.`}
+    else{a.textContent=`Agent ${n} has no reviews, so there is nothing to check.`}
+  }
+  document.getElementById('go').onclick=look;
+  document.getElementById('q').onkeydown=e=>{if(e.key==='Enter')look()};
+});
+</script>
+</body>
+</html>
