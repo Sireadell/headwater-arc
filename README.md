@@ -26,7 +26,7 @@ Arc has 2,314 registered agents. 116 of them have reviews. I checked all 116.
 | Some reviewers linked to the owner's money | 10 |
 | Every reviewer linked | 6 |
 
-Open the live page, type an agent number, and you'll see the reviewers, the reason each was flagged, and the payment behind it.
+Open the [live page](https://sireadell.github.io/headwater-arc/), type an agent number, and you'll see the reviewers, the reason each was flagged, and the payment behind it.
 
 ## You can check my work on Arc itself
 
