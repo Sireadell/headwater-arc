@@ -7,6 +7,10 @@ import { ethers } from 'ethers';
 import { config } from '../src/config.js';
 
 const KEY_FILE = process.env.MEMO_KEY_FILE;
+if (!KEY_FILE) {
+  console.error('MEMO_KEY_FILE is not set, so nothing was sent. Point it at a file holding MINER_PRIVATE_KEY.');
+  process.exit(1);
+}
 const key = fs.readFileSync(KEY_FILE, 'utf8').match(/^MINER_PRIVATE_KEY=(.+)$/m)?.[1]?.trim().replace(/^["']|["']$/g, '');
 const provider = new ethers.JsonRpcProvider(config.arcReadRpcUrl, 5042, { staticNetwork: true });
 const wallet = new ethers.Wallet(key, provider);

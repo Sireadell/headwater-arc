@@ -7,8 +7,8 @@
 <meta name="description" content="Checks who paid for the reviews on Arc's AI agents, and records what it finds on Arc itself.">
 <style>
 :root{--bg:#0A0B0C;--surface:#111315;--border:#262A2D;--text:#ECEEEF;--mut:#8B9196;--accent:#C97A3D;--red:#E5484D;--amber:#F5A623;--green:#3DD68C}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#FAF9F7;--surface:#fff;--border:#E3E0DA;--text:#1B1D1F;--mut:#5F666B;--accent:#A85F27}}
-:root[data-theme="light"]{--bg:#FAF9F7;--surface:#fff;--border:#E3E0DA;--text:#1B1D1F;--mut:#5F666B;--accent:#A85F27}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#FAF9F7;--surface:#fff;--border:#E3E0DA;--text:#1B1D1F;--mut:#5F666B;--accent:#A85F27;--amber:#8A5A00;--green:#1B6B3F;--red:#B3261E}}
+:root[data-theme="light"]{--bg:#FAF9F7;--surface:#fff;--border:#E3E0DA;--text:#1B1D1F;--mut:#5F666B;--accent:#A85F27;--amber:#8A5A00;--green:#1B6B3F;--red:#B3261E}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
 main{max-width:860px;margin:0 auto;padding:40px 16px 80px}
@@ -61,12 +61,12 @@ footer{margin-top:48px;color:var(--mut);font-size:14px}
 <li>I only follow the first payment into a wallet, up to two steps back. A reviewer funded some other way won't show a link.</li>
 <li>Wallets that made thousands of payments (exchanges, bridges, faucets) are ignored as funders, because being paid by one of them links you to nobody. 9 were set aside. If such a wallet is the agent's own owner, it still counts.</li>
 <li id="nofunder"></li>
-<li>The wallet I used to write these records (<a id="wl" href="#">0xb3FB...2B53</a>) is mine. It left one review, on agent 192. Agent 192 shows no link.</li>
+<li>The wallet I used to write these records (<a id="wl" href="#">0xb3FB...2B53</a>) is mine. It left one review, on agent 192, and it was also the first wallet to send money to agent 192's owner (0.0012 USDC). My check only looks at money going from the owner or a shared funder to the reviewer, so it did not flag that. It is a link, and I am telling you.</li>
 <li>I scanned Arc from block 10,000,000 to block <span id="tip"></span>. Payments before that aren't in view.</li>
 </ul>
 
 <h2>How the record on Arc works</h2>
-<p>For each agent with a link I sent one small transaction from my wallet to itself, with no money moved. The note inside is text: the agent number, the reviewer wallets, and the transaction that funded each one. Open any record above, then open the funding transaction named inside it. You'll see the same payment.</p>
+<p>For each agent with a link I sent one small transaction from my wallet to itself, with no money moved. The note inside is text: the agent number, the reviewer wallets, and the transaction that funded each one. Open any record above, then open the funding transaction named inside it. You'll see the same payment. On the explorer, the note first shows as hex. Click "View details", then switch the data to UTF-8 to read it.</p>
 
 <footer>
 <p>Reads Arc's ERC-8004 registries and the network's USDC payment log. No outside indexer. <a href="https://github.com/Sireadell/headwater-arc">Source</a></p>
@@ -78,11 +78,11 @@ const W='0xb3FB14FEcac09efbD0C74Fc07d50d7eD1eef2B53';
 const short=a=>a.slice(0,8)+'…'+a.slice(-6);
 const addr=a=>`<a class="mono" href="${EX}/address/${a}">${short(a)}</a>`;
 const tx=h=>`<a class="mono" href="${EX}/tx/${h}">${h.slice(0,10)}…${h.slice(-6)}</a>`;
-const tag=f=>f.linked===f.reviewers?`<span class="tag all">all ${f.reviewers} reviewers linked</span>`:`<span class="tag some">${f.linked} of ${f.reviewers} reviewers linked</span>`;
+const tag=f=>f.linked===f.reviewers?`<span class="tag all">${f.reviewers===1?'the 1 reviewer is linked':'all '+f.reviewers+' reviewers linked'}</span>`:`<span class="tag some">${f.linked} of ${f.reviewers} reviewers linked</span>`;
 function card(f,open){
-  return `<details class="card" id="agent-${f.agentId}"${open?' open':''}><summary><b>Agent ${f.agentId}</b>${tag(f)}<span class="mut">record on Arc: ${tx(f.memoTx)}</span></summary><div class="body">
+  return `<details class="card"${open?' open':' id="agent-'+f.agentId+'"'}><summary><b>Agent ${f.agentId}</b>${tag(f)}<span class="mut">record on Arc: ${tx(f.memoTx)}</span></summary><div class="body">
   <p class="mut" style="margin-top:12px">Owner: ${addr(f.owner)}</p>
-  ${f.evidence.map(e=>`<div class="rev"><div>Reviewer ${addr(e.reviewer)}</div><ul>${e.reasons.map(r=>`<li>${r.why}</li>`).join('')}</ul>${e.fundingTx?`<div class="mut">Funding payment: ${tx(e.fundingTx)}</div>`:''}</div>`).join('')}
+  ${f.evidence.map(e=>`<div class="rev"><div>Reviewer ${addr(e.reviewer)}</div><ul>${e.reasons.map(r=>`<li>${r.why}</li>`).join('')}</ul>${e.fundingTx?`<div class="mut">${e.fundingNote}: ${tx(e.fundingTx)}</div>`:''}</div>`).join('')}
   </div></details>`;
 }
 fetch('data.json').then(r=>r.json()).then(d=>{
@@ -94,13 +94,14 @@ fetch('data.json').then(r=>r.json()).then(d=>{
   document.getElementById('nofunder').textContent=`${d.reviewersWithNoFunderFound} reviewers have no funding payment I could find at all, so they show no link either way.`;
   document.getElementById('tip').textContent=s.window.toBlock.toLocaleString('en-US');
   document.getElementById('wl').href=`${EX}/address/${W}`;
-  const clean=new Set(d.cleanAgentIds);
+  const clean=new Set(d.cleanAgentIds),unknown=new Set(d.cleanWithUnknownFunders);
   function look(){
     const v=document.getElementById('q').value.trim(),a=document.getElementById('answer');
     if(!/^\d+$/.test(v)){a.textContent='Type an agent number from 0 to 2313.';return}
     const n=+v,f=d.flagged.find(x=>x.agentId===n);
+    if(n>2313){a.textContent=`Agent ${n} does not exist. Arc has agents 0 to 2313.`;return}
     if(f){a.innerHTML=card(f,true)}
-    else if(clean.has(n)){a.innerHTML=`<span class="ok">Agent ${n}: reviewed, and no money link found.</span> That means none of its reviewers was paid by the agent's owner or wallet within the window checked.`}
+    else if(clean.has(n)){const u=unknown.has(n);a.innerHTML=`<span class="ok">Agent ${n}: reviewed, and no money link found.</span> ${u?'Some of its reviewers have no funding payment I could find, so for them there is nothing to compare.':"None of its reviewers was paid by the agent's owner or wallet within the window checked."}`}
     else{a.textContent=`Agent ${n} has no reviews, so there is nothing to check.`}
   }
   document.getElementById('go').onclick=look;

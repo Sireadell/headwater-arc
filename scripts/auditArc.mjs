@@ -19,6 +19,11 @@ import fs from 'node:fs';
 import { config } from '../src/config.js';
 
 const ZERO = '0x0000000000000000000000000000000000000000';
+if (!fs.existsSync(config.arcTransferIndexPath)) {
+  console.error(`No saved payments list at ${config.arcTransferIndexPath}.
+Build it first (about 10 minutes): node --env-file=.env scripts/buildArcIndex.mjs`);
+  process.exit(1);
+}
 const index = JSON.parse(fs.readFileSync(config.arcTransferIndexPath, 'utf8'));
 const hubs = new Set(index.hubs.map((h) => h.address));
 

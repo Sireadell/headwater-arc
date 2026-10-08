@@ -115,6 +115,11 @@
   2201,
   2306
  ],
+ "cleanWithUnknownFunders": [
+  182,
+  1419,
+  2306
+ ],
  "flagged": [
   {
    "agentId": 0,
@@ -132,7 +137,8 @@
        "why": "The agent's owner sent this reviewer its starting money."
       }
      ],
-     "fundingTx": "0x6657fbd26e83d6ff88299fc148a55fbb307ed746c025d0f0318684efd725501b"
+     "fundingTx": "0x6657fbd26e83d6ff88299fc148a55fbb307ed746c025d0f0318684efd725501b",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -152,7 +158,8 @@
        "why": "The agent's owner sent this reviewer its starting money."
       }
      ],
-     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57"
+     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -172,7 +179,8 @@
        "why": "The agent's owner sent this reviewer its starting money."
       }
      ],
-     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57"
+     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -192,7 +200,8 @@
        "why": "The agent's owner sent this reviewer its starting money."
       }
      ],
-     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57"
+     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -212,7 +221,8 @@
        "why": "The agent's owner sent this reviewer its starting money."
       }
      ],
-     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57"
+     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -232,7 +242,8 @@
        "why": "The agent's owner sent this reviewer its starting money."
       }
      ],
-     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57"
+     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -252,7 +263,8 @@
        "why": "The agent's owner sent this reviewer its starting money."
       }
      ],
-     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57"
+     "fundingTx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -272,7 +284,8 @@
        "why": "The owner and this reviewer got their starting money from the same wallet."
       }
      ],
-     "fundingTx": "0x50a91c38046a7a5cb3d8724bf8a52c8914afac08854a0b991da72834c42b3da3"
+     "fundingTx": "0x50a91c38046a7a5cb3d8724bf8a52c8914afac08854a0b991da72834c42b3da3",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -289,10 +302,11 @@
      "reasons": [
       {
        "type": "paid_by_owner",
-       "why": "The agent's owner sent this reviewer its starting money."
+       "why": "The owner of this agent paid a wallet, and that wallet then paid this reviewer."
       }
      ],
-     "fundingTx": "0x7bc68beb2b127e381a437350176b632295a71880f14891910c7e7ca02df9842f"
+     "fundingTx": "0x7bc68beb2b127e381a437350176b632295a71880f14891910c7e7ca02df9842f",
+     "fundingNote": "Payment from the owner to the wallet that then paid this reviewer"
     }
    ]
   },
@@ -316,21 +330,23 @@
        "why": "Another reviewer of this agent got its starting money from the same wallet."
       }
      ],
-     "fundingTx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a"
+     "fundingTx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a",
+     "fundingNote": "Funding payment"
     },
     {
      "reviewer": "0xaa413ec9e52ecd6e56f4d2db107781fecf989f4a",
      "reasons": [
       {
        "type": "paid_by_owner",
-       "why": "The agent's owner sent this reviewer its starting money."
+       "why": "The owner of this agent paid a wallet, and that wallet then paid this reviewer."
       },
       {
        "type": "shared_funder",
        "why": "Another reviewer of this agent got its starting money from the same wallet."
       }
      ],
-     "fundingTx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a"
+     "fundingTx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a",
+     "fundingNote": "Payment from the owner to the wallet that then paid this reviewer"
     }
    ]
   },
@@ -350,7 +366,8 @@
        "why": "The agent's owner sent this reviewer its starting money."
       }
      ],
-     "fundingTx": "0x824d59ce2383df844d412ad13973df46c6ebc4794f5cfd2647cdaeda150f8e8d"
+     "fundingTx": "0x824d59ce2383df844d412ad13973df46c6ebc4794f5cfd2647cdaeda150f8e8d",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -370,7 +387,8 @@
        "why": "Another reviewer of this agent got its starting money from the same wallet."
       }
      ],
-     "fundingTx": null
+     "fundingTx": null,
+     "fundingNote": "Funding payment"
     },
     {
      "reviewer": "0xeb02212bcb185b75f996bfe9bc638f640f36782a",
@@ -384,7 +402,8 @@
        "why": "Another reviewer of this agent got its starting money from the same wallet."
       }
      ],
-     "fundingTx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a"
+     "fundingTx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -404,7 +423,8 @@
        "why": "The owner and this reviewer got their starting money from the same wallet."
       }
      ],
-     "fundingTx": "0x204fb3cb2c3fa9cac31aefbf684655ec419d3b63b6a055333ddd7388be065999"
+     "fundingTx": "0x204fb3cb2c3fa9cac31aefbf684655ec419d3b63b6a055333ddd7388be065999",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -424,7 +444,8 @@
        "why": "The owner and this reviewer got their starting money from the same wallet."
       }
      ],
-     "fundingTx": "0x810000a8834fad45f6ef3d3a60cd1763029365a9d9f04bc6e2362ad55a00e901"
+     "fundingTx": "0x810000a8834fad45f6ef3d3a60cd1763029365a9d9f04bc6e2362ad55a00e901",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -448,7 +469,8 @@
        "why": "Another reviewer of this agent got its starting money from the same wallet."
       }
      ],
-     "fundingTx": "0x28c0fa5c2a370a239c9eb7f8e606589792b18d526d01e0ed5346083d62853cf2"
+     "fundingTx": "0x28c0fa5c2a370a239c9eb7f8e606589792b18d526d01e0ed5346083d62853cf2",
+     "fundingNote": "Funding payment"
     },
     {
      "reviewer": "0xeaf85d8c4a0baf0d73b32fffb7e57976b5572ba2",
@@ -462,7 +484,8 @@
        "why": "Another reviewer of this agent got its starting money from the same wallet."
       }
      ],
-     "fundingTx": "0x4b90d50402ecc2d2f5e2e6133381d04884f7cf5993fddfd6c8c5ab162b053235"
+     "fundingTx": "0x4b90d50402ecc2d2f5e2e6133381d04884f7cf5993fddfd6c8c5ab162b053235",
+     "fundingNote": "Funding payment"
     }
    ]
   },
@@ -482,7 +505,8 @@
        "why": "The owner and this reviewer got their starting money from the same wallet."
       }
      ],
-     "fundingTx": "0x0f892b84fe9dd8af42335abc5810f66e0dad463c791abb87a2ad45497e4952e7"
+     "fundingTx": "0x0f892b84fe9dd8af42335abc5810f66e0dad463c791abb87a2ad45497e4952e7",
+     "fundingNote": "Funding payment"
     }
    ]
   }

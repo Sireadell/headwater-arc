@@ -51,7 +51,8 @@ These are evidence labels, not accusations. A friend can fund a friend's wallet 
 - Wallets that made thousands of payments (exchanges, bridges, faucets) are ignored as funders, because being paid by one links you to nobody. If such a wallet is the agent's own owner, it still counts.
 - 4 reviewers have no funding payment I could find, so they show no link either way.
 - I scanned Arc from block 10,000,000. Payments before that are not in view.
-- One review on agent 192 came from my own wallet (the one I used to write the records). Agent 192 shows no link.
+- One review on agent 192 came from my own wallet (the one I used to write the records). That wallet was also the first to send money to agent 192's owner (0.0012 USDC). The check only looks at money going from the owner or a shared funder to a reviewer, so it did not flag this. It is a link, and I'm telling you.
+- The check can't see money flowing from a reviewer to an owner, or reviewers who simply review each other's agents.
 
 ## How it reads Arc
 
@@ -67,7 +68,7 @@ Install dependencies:
 npm install
 ```
 
-Build the saved payments list (needs a Dwellir Arc URL in `.env` as `DWELLIR_ARC_URL`, or it falls back to Arc's public endpoint, slowly):
+Build the saved payments list. The next step needs it, and it takes about 10 minutes with a Dwellir Arc URL in `.env` as `DWELLIR_ARC_URL` (without one it falls back to Arc's public endpoint, which is much slower):
 
 ```powershell
 node --env-file=.env scripts/buildArcIndex.mjs
