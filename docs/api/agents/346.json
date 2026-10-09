@@ -97,7 +97,7 @@
       }
     ],
     "raterPaidOwner": [],
-    "record": "0xf06a6ec5171b891281ca7e871911e111e99cd6e964afc15a4d686e1827e33dd1"
+    "record": "0xe35f07affd591bf53f36654627b34d4ff738b0a51a9d716bc8f95ff6a0242706"
   },
   "limits": {
     "fundingHops": 2,
@@ -111,5 +111,5 @@
     "codeCheckTotal": 2,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T10:46:31.242Z"
+  "generatedAt": "2026-10-09T11:15:10.100Z"
 }

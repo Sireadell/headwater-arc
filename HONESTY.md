@@ -37,6 +37,7 @@ A plain list of what Headwater on Arc actually does, what was checked, and where
 |---|---|
 | Automatic refresh | Rerunning the three scripts by hand. A scheduled rebuild is the next step |
 | Automatic records | New findings are written to Arc by hand, because doing it automatically would need a wallet key on a server |
+| Older records stay on chain | 19 agents have an earlier, differently formatted record from the first version. They cannot be deleted, so the newest record (linked on each lookup page) is the current one and the older ones are history |
 | A quest or app-reward classifier for Arc | The Monad build recognised game contracts by their code. Arc has none that I found, so `APP GENERATED` is wired but has fired on no agent |
 
 ## Where the code came from
