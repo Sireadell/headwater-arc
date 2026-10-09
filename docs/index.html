@@ -51,7 +51,7 @@ footer{margin-top:48px;color:var(--mut);font-size:14px}
 <div class="search"><input id="q" inputmode="numeric" placeholder="Agent number, for example 346" aria-label="Agent number"><button id="go">Check</button></div>
 <div id="answer" class="mut">Type an agent number from 0 to 2313.</div>
 
-<h2>The 16 agents with a money link</h2>
+<h2>The 19 agents with a money link</h2>
 <p class="mut">Each one has a record on Arc. Open it and the wallets and the funding payment are written inside, in plain text.</p>
 <div id="list"></div>
 
@@ -61,7 +61,8 @@ footer{margin-top:48px;color:var(--mut);font-size:14px}
 <li>I only follow the first payment into a wallet, up to two steps back. A reviewer funded some other way won't show a link.</li>
 <li>Wallets that made thousands of payments (exchanges, bridges, faucets) are ignored as funders, because being paid by one of them links you to nobody. 9 were set aside. If such a wallet is the agent's own owner, it still counts.</li>
 <li id="nofunder"></li>
-<li>The wallet I used to write these records (<a id="wl" href="#">0xb3FB...2B53</a>) is mine. It left one review, on agent 192, and it was also the first wallet to send money to agent 192's owner (0.0012 USDC). My check only looks at money going from the owner or a shared funder to the reviewer, so it did not flag that. It is a link, and I am telling you.</li>
+<li>The wallet I used to write these records (<a id="wl" href="#">0xb3FB...2B53</a>) is mine. It left one review, on agent 192, and it was also the first wallet to send money to agent 192's owner (0.0012 USDC). So agent 192 is flagged. It is a link, and I am telling you.</li>
+<li>I can't see owners who review each other's agents as a ring, or reviewers who review each other, when a busy wallet funded them all.</li>
 <li>I scanned Arc from block 10,000,000 to block <span id="tip"></span>. Payments before that aren't in view.</li>
 </ul>
 

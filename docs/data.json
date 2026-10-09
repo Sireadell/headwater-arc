@@ -7,9 +7,9 @@
    "toBlock": 24970949
   },
   "reviewedAgents": 116,
-  "noLinkFound": 100,
-  "someLinked": 10,
-  "allLinked": 6,
+  "noLinkFound": 97,
+  "someLinked": 12,
+  "allLinked": 7,
   "hubsIgnored": 9
  },
  "reviewersWithNoFunderFound": 4,
@@ -31,7 +31,6 @@
   30,
   31,
   32,
-  134,
   135,
   136,
   137,
@@ -43,7 +42,6 @@
   179,
   182,
   186,
-  192,
   193,
   198,
   209,
@@ -64,7 +62,6 @@
   262,
   268,
   273,
-  289,
   290,
   298,
   304,
@@ -274,18 +271,60 @@
    "status": "ALL_REVIEWERS_LINKED",
    "reviewers": 1,
    "linked": 1,
-   "memoTx": "0x9b6c1147a140ab0f01a102c745798144eada5b4601429798db36ce2a191e865f",
+   "memoTx": "0xb8806700c49f8e6f243e09904240790af2e4ad4f03f1c91f05c0f17ea67edf79",
    "evidence": [
     {
      "reviewer": "0x72e72e5c8af30bf9d057cda16ef14548c0d9536c",
      "reasons": [
       {
-       "type": "same_funder_as_owner",
-       "why": "The owner and this reviewer got their starting money from the same wallet."
+       "type": "paid_the_owner",
+       "why": "This reviewer sent the owner of this agent its starting money."
       }
      ],
-     "fundingTx": "0x50a91c38046a7a5cb3d8724bf8a52c8914afac08854a0b991da72834c42b3da3",
-     "fundingNote": "Funding payment"
+     "fundingTx": "0x047441c9fb3a202316f4a805977ca2f4f7dcde5de277972390d72589557ce708",
+     "fundingNote": "Payment from this reviewer to the owner"
+    }
+   ]
+  },
+  {
+   "agentId": 134,
+   "owner": "0x6787d954ff67a6e58f8fb28ef63f99a2f90796eb",
+   "status": "SOME_REVIEWERS_LINKED",
+   "reviewers": 5,
+   "linked": 1,
+   "memoTx": "0xc7adbfb13992eb6a302be80d75fb33c6cc8d6c49206150bd3d2d08fc553a7a36",
+   "evidence": [
+    {
+     "reviewer": "0x6b7bfdd67c0b3b69aa4d7017d67db82f485525f3",
+     "reasons": [
+      {
+       "type": "paid_the_owner",
+       "why": "This reviewer sent the owner of this agent its starting money."
+      }
+     ],
+     "fundingTx": "0xf16b2263d88c9731b0c6afacce0a662245bb8dc7d9fd0958b87f4677fbeaeca8",
+     "fundingNote": "Payment from this reviewer to the owner"
+    }
+   ]
+  },
+  {
+   "agentId": 192,
+   "owner": "0xd29212b94b8ff570b1407c8ae45b78a1601220d5",
+   "status": "ALL_REVIEWERS_LINKED",
+   "reviewers": 1,
+   "linked": 1,
+   "memoTx": "0xe588d8d592c16b6963c4996252ee049c9fab1ceb51fd459a4c949f6cd9756450",
+   "evidence": [
+    {
+     "reviewer": "0xb3fb14fecac09efbd0c74fc07d50d7ed1eef2b53",
+     "reasons": [
+      {
+       "type": "paid_the_owner",
+       "why": "This reviewer sent the owner of this agent its starting money."
+      }
+     ],
+     "fundingTx": "0xe38ec6cab228d2c051f96a8a4e18451e11feef82cfcee04272499b0c945d9072",
+     "fundingNote": "Payment from this reviewer to the owner"
     }
    ]
   },
@@ -377,25 +416,14 @@
    "status": "SOME_REVIEWERS_LINKED",
    "reviewers": 3,
    "linked": 2,
-   "memoTx": "0x3d0a4a60750e0526548b7be02cfc91f2c380e20b656d48aee00277b01198c997",
+   "memoTx": "0x54d1372af8205110ccf1e0212e4d5fb47161f54f70bbc23878c49ec206c7d708",
    "evidence": [
     {
      "reviewer": "0xe24d37f3fed8c3d2775b3b0a385247eaf5592c56",
      "reasons": [
       {
-       "type": "shared_funder",
-       "why": "Another reviewer of this agent got its starting money from the same wallet."
-      }
-     ],
-     "fundingTx": null,
-     "fundingNote": "Funding payment"
-    },
-    {
-     "reviewer": "0xeb02212bcb185b75f996bfe9bc638f640f36782a",
-     "reasons": [
-      {
-       "type": "same_funder_as_owner",
-       "why": "The owner and this reviewer got their starting money from the same wallet."
+       "type": "paid_the_owner",
+       "why": "This reviewer paid a wallet, and that wallet then paid the owner of this agent."
       },
       {
        "type": "shared_funder",
@@ -403,7 +431,22 @@
       }
      ],
      "fundingTx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a",
-     "fundingNote": "Funding payment"
+     "fundingNote": "Payment from this reviewer to the wallet that then paid the owner"
+    },
+    {
+     "reviewer": "0xeb02212bcb185b75f996bfe9bc638f640f36782a",
+     "reasons": [
+      {
+       "type": "paid_the_owner",
+       "why": "This reviewer sent the owner of this agent its starting money."
+      },
+      {
+       "type": "shared_funder",
+       "why": "Another reviewer of this agent got its starting money from the same wallet."
+      }
+     ],
+     "fundingTx": "0x824d59ce2383df844d412ad13973df46c6ebc4794f5cfd2647cdaeda150f8e8d",
+     "fundingNote": "Payment from this reviewer to the owner"
     }
    ]
   },
@@ -446,6 +489,27 @@
      ],
      "fundingTx": "0x810000a8834fad45f6ef3d3a60cd1763029365a9d9f04bc6e2362ad55a00e901",
      "fundingNote": "Funding payment"
+    }
+   ]
+  },
+  {
+   "agentId": 289,
+   "owner": "0x0d4897bf4222deddf8a5b31fa7d8021c369f40d1",
+   "status": "SOME_REVIEWERS_LINKED",
+   "reviewers": 2,
+   "linked": 1,
+   "memoTx": "0x9e3a7be570e5d066e7ece8f5ceef4fb26ef45847c55323b6aa1d3f862f251505",
+   "evidence": [
+    {
+     "reviewer": "0xf0854c4dc9d3f1ebd4f0e44eb91587f7fc5bd518",
+     "reasons": [
+      {
+       "type": "paid_the_owner",
+       "why": "This reviewer sent the owner of this agent its starting money."
+      }
+     ],
+     "fundingTx": "0x5095bc6d4675ef262fdefc6678caafeebc36a8ebca683651d40035c97b1147f0",
+     "fundingNote": "Payment from this reviewer to the owner"
     }
    ]
   },

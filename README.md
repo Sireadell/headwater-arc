@@ -22,15 +22,15 @@ Arc has 2,314 registered agents. 116 of them have reviews. I checked all 116.
 
 | Result | Agents |
 |---|---|
-| No money link found | 100 |
-| Some reviewers linked to the owner's money | 10 |
-| Every reviewer linked | 6 |
+| No money link found | 97 |
+| Some reviewers linked | 12 |
+| Every reviewer linked | 7 |
 
 Open the [live page](https://sireadell.github.io/headwater-arc/), type an agent number, and you'll see the reviewers, the reason each was flagged, and the payment behind it.
 
 ## You can check my work on Arc itself
 
-For each of the 16 agents with a link, I sent one small transaction on Arc mainnet from my wallet to itself, with no money moved. The note inside it is readable text: the agent number, the flagged reviewer wallets, and the transaction that funded each one.
+For each of the 19 agents with a link, I sent one small transaction on Arc mainnet from my wallet to itself, with no money moved. The note inside it is readable text: the agent number, the flagged reviewer wallets, and the transaction that funded each one.
 
 So you don't have to trust my page. Open the record on Arc, open the funding payment named inside it, and see whether they match. I did this for agent 346 and agent 8, and both matched the chain exactly.
 
@@ -40,6 +40,7 @@ So you don't have to trust my page. Open the record on Arc, open the funding pay
 |---|---|
 | `self_review` | The reviewer is the agent's own owner or wallet |
 | `paid_by_owner` | The owner sent the reviewer its starting money, directly or through one other wallet |
+| `paid_the_owner` | The reviewer sent the owner its starting money, directly or through one other wallet |
 | `same_funder_as_owner` | The owner and the reviewer got their starting money from the same wallet |
 | `shared_funder` | Several reviewers of one agent got their starting money from the same wallet |
 
@@ -51,8 +52,8 @@ These are evidence labels, not accusations. A friend can fund a friend's wallet 
 - Wallets that made thousands of payments (exchanges, bridges, faucets) are ignored as funders, because being paid by one links you to nobody. If such a wallet is the agent's own owner, it still counts.
 - 4 reviewers have no funding payment I could find, so they show no link either way.
 - I scanned Arc from block 10,000,000. Payments before that are not in view.
-- One review on agent 192 came from my own wallet (the one I used to write the records). That wallet was also the first to send money to agent 192's owner (0.0012 USDC). The check only looks at money going from the owner or a shared funder to a reviewer, so it did not flag this. It is a link, and I'm telling you.
-- The check can't see money flowing from a reviewer to an owner, or reviewers who simply review each other's agents.
+- One review on agent 192 came from my own wallet (the one I used to write the records). That wallet was also the first to send money to agent 192's owner (0.0012 USDC), so agent 192 is flagged. It is a link, and I'm telling you.
+- The check can't see reviewers who simply review each other's agents, or a ring of owners reviewing each other's agents when a busy wallet funded them all.
 
 ## How it reads Arc
 

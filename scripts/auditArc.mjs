@@ -62,8 +62,11 @@ for (const agent of index.agents) {
     if (own.has(r)) flags.push({ type: 'self_review', detail: 'The reviewer is the agent\'s own owner or wallet.' });
     const viaOwner = links.find((l) => l.kind === 'wallet' && own.has(l.address));
     if (viaOwner) flags.push({ type: 'paid_by_owner', hop: viaOwner.hop, tx: viaOwner.tx, detail: viaOwner.hop === 1 ? 'The agent\'s owner paid this reviewer directly.' : 'The agent\'s owner paid a wallet that paid this reviewer.' });
-    const sharesFamily = links.find((l) => l.kind === 'wallet' && ownerFamily.has(l.address) && !own.has(l.address));
-    if (sharesFamily && !viaOwner) flags.push({ type: 'same_funder_as_owner', hop: sharesFamily.hop, tx: sharesFamily.tx, detail: 'Reviewer and owner were paid by the same wallet.' });
+    // The other direction: the reviewer is one of the wallets that paid the owner.
+    const ownerPaidBy = ownerChains.flatMap((c) => c.links).find((l) => l.kind === 'wallet' && l.address === r);
+    if (ownerPaidBy) flags.push({ type: 'paid_the_owner', hop: ownerPaidBy.hop, tx: ownerPaidBy.tx, detail: ownerPaidBy.hop === 1 ? "This reviewer sent the agent's owner its starting money." : "This reviewer paid a wallet that then paid the agent's owner." });
+    const sharesFamily = links.find((l) => l.kind === 'wallet' && ownerFamily.has(l.address) && !own.has(l.address) && l.address !== r);
+    if (sharesFamily && !viaOwner && !ownerPaidBy) flags.push({ type: 'same_funder_as_owner', hop: sharesFamily.hop, tx: sharesFamily.tx, detail: 'Reviewer and owner were paid by the same wallet.' });
     return { reviewer: r, links, flags };
   });
 

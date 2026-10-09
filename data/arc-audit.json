@@ -7,9 +7,9 @@
    "toBlock": 24970949
   },
   "reviewedAgents": 116,
-  "noLinkFound": 100,
-  "someLinked": 10,
-  "allLinked": 6,
+  "noLinkFound": 97,
+  "someLinked": 12,
+  "allLinked": 7,
   "hubsIgnored": 9
  },
  "results": [
@@ -968,10 +968,10 @@
      ],
      "flags": [
       {
-       "type": "same_funder_as_owner",
+       "type": "paid_the_owner",
        "hop": 1,
-       "tx": "0x50a91c38046a7a5cb3d8724bf8a52c8914afac08854a0b991da72834c42b3da3",
-       "detail": "Reviewer and owner were paid by the same wallet."
+       "tx": "0x047441c9fb3a202316f4a805977ca2f4f7dcde5de277972390d72589557ce708",
+       "detail": "This reviewer sent the agent's owner its starting money."
       }
      ]
     }
@@ -983,8 +983,8 @@
    "wallet": "0x6787d954ff67a6e58f8fb28ef63f99a2f90796eb",
    "reviewerCount": 5,
    "unknownFunders": 0,
-   "flaggedReviewers": 0,
-   "status": "NO_FUNDING_LINK_FOUND",
+   "flaggedReviewers": 1,
+   "status": "SOME_REVIEWERS_LINKED",
    "reviewers": [
     {
      "reviewer": "0x6b7bfdd67c0b3b69aa4d7017d67db82f485525f3",
@@ -996,7 +996,14 @@
        "tx": "0xb7039c2832d119b72d928d695e94091b39e94defea4fcbaa08417fbf044fe191"
       }
      ],
-     "flags": []
+     "flags": [
+      {
+       "type": "paid_the_owner",
+       "hop": 1,
+       "tx": "0xf16b2263d88c9731b0c6afacce0a662245bb8dc7d9fd0958b87f4677fbeaeca8",
+       "detail": "This reviewer sent the agent's owner its starting money."
+      }
+     ]
     },
     {
      "reviewer": "0x6685bfcb3d75eb7af903e40a53e3ddd4324a90eb",
@@ -1411,8 +1418,8 @@
    "wallet": "0xd29212b94b8ff570b1407c8ae45b78a1601220d5",
    "reviewerCount": 1,
    "unknownFunders": 0,
-   "flaggedReviewers": 0,
-   "status": "NO_FUNDING_LINK_FOUND",
+   "flaggedReviewers": 1,
+   "status": "ALL_REVIEWERS_LINKED",
    "reviewers": [
     {
      "reviewer": "0xb3fb14fecac09efbd0c74fc07d50d7ed1eef2b53",
@@ -1424,7 +1431,14 @@
        "tx": "0x03673c9c3ab1b0264005ee64a813a00c665fdf4df4d3e799779c93d2b11b4972"
       }
      ],
-     "flags": []
+     "flags": [
+      {
+       "type": "paid_the_owner",
+       "hop": 1,
+       "tx": "0xe38ec6cab228d2c051f96a8a4e18451e11feef82cfcee04272499b0c945d9072",
+       "detail": "This reviewer sent the agent's owner its starting money."
+      }
+     ]
     }
    ]
   },
@@ -1862,6 +1876,12 @@
      ],
      "flags": [
       {
+       "type": "paid_the_owner",
+       "hop": 2,
+       "tx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a",
+       "detail": "This reviewer paid a wallet that then paid the agent's owner."
+      },
+      {
        "type": "shared_funder",
        "funder": "0x900c41eda7013b1e1c1ad3af3c47188a04a2160a",
        "detail": "Paid for by the same wallet as another reviewer of this agent."
@@ -1888,10 +1908,10 @@
      ],
      "flags": [
       {
-       "type": "same_funder_as_owner",
+       "type": "paid_the_owner",
        "hop": 1,
-       "tx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a",
-       "detail": "Reviewer and owner were paid by the same wallet."
+       "tx": "0x824d59ce2383df844d412ad13973df46c6ebc4794f5cfd2647cdaeda150f8e8d",
+       "detail": "This reviewer sent the agent's owner its starting money."
       },
       {
        "type": "shared_funder",
@@ -2589,8 +2609,8 @@
    "wallet": "0x0d4897bf4222deddf8a5b31fa7d8021c369f40d1",
    "reviewerCount": 2,
    "unknownFunders": 0,
-   "flaggedReviewers": 0,
-   "status": "NO_FUNDING_LINK_FOUND",
+   "flaggedReviewers": 1,
+   "status": "SOME_REVIEWERS_LINKED",
    "reviewers": [
     {
      "reviewer": "0x6a663faa871f0622ff2435b65f514faf876c59bf",
@@ -2622,7 +2642,14 @@
        "tx": "0x3488c915d6706534c529baea40138af623d078801f87e7884c6d7d104b477b86"
       }
      ],
-     "flags": []
+     "flags": [
+      {
+       "type": "paid_the_owner",
+       "hop": 1,
+       "tx": "0x5095bc6d4675ef262fdefc6678caafeebc36a8ebca683651d40035c97b1147f0",
+       "detail": "This reviewer sent the agent's owner its starting money."
+      }
+     ]
     }
    ]
   },

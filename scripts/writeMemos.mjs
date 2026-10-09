@@ -32,13 +32,18 @@ const send = process.argv.includes('--send');
 console.log('wallet', wallet.address, 'balance', ethers.formatEther(await provider.getBalance(wallet.address)), 'USDC', 'memos', memos.length);
 for (const m of memos) {
   const data = ethers.hexlify(ethers.toUtf8Bytes(JSON.stringify({ headwater: 1, ...m })));
-  if (done[m.agent]) { console.log('skip', m.agent); continue; }
+  // Already on Arc with the same text: skip. Changed text: send a new record and keep the old one in history.
+  if (done[m.agent]) {
+    const prev = await provider.getTransaction(done[m.agent].tx);
+    if (prev && prev.data.toLowerCase() === data.toLowerCase()) { console.log('same, skip', m.agent); continue; }
+    console.log('changed since last record', m.agent);
+  }
   const gas = await provider.estimateGas({ from: wallet.address, to: wallet.address, data });
   console.log(`agent ${m.agent}: ${(data.length - 2) / 2} bytes, gas ${gas}`);
   if (!send) continue;
   const tx = await wallet.sendTransaction({ to: wallet.address, value: 0, data });
   const rc = await tx.wait();
-  done[m.agent] = { tx: tx.hash, block: rc.blockNumber };
+  done[m.agent] = { tx: tx.hash, block: rc.blockNumber, history: [...(done[m.agent]?.history ?? []), ...(done[m.agent] ? [{ tx: done[m.agent].tx, block: done[m.agent].block }] : [])] };
   fs.writeFileSync(donePath, JSON.stringify(done, null, 1));
   console.log('sent', m.agent, tx.hash);
 }
