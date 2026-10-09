@@ -337,3 +337,17 @@ ol, ul { padding: 0; list-style: none; }
   .foot { flex-direction: column; padding: 22px 16px; }
   .example { padding: 10px 12px; font-size: 12.5px; }
 }
+
+.hero-links{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 0}
+.btn-ghost{border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:14px;color:var(--text-dim)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--text)}
+.made-of{margin-top:34px}
+.table-card{padding:6px 20px}
+.made-table{width:100%;border-collapse:collapse}
+.made-table th{text-align:left;font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);padding:12px 10px;border-bottom:1px solid var(--border)}
+.made-table td{padding:14px 10px;border-bottom:1px solid var(--border-soft);font-size:14px;vertical-align:top}
+.made-table tr:last-child td{border-bottom:0}
+.made-table td.num{font-size:15px;white-space:nowrap;width:90px;color:var(--text)}
+.made-table td:last-child{width:150px;white-space:nowrap}
+.faint{color:var(--text-faint)}
+@media (max-width:700px){.made-table th:nth-child(3),.made-table td:last-child{display:none}.made-table td.num{width:60px}}

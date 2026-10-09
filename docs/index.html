@@ -26,6 +26,7 @@
         <button id="homeGo" class="btn" type="button">Check agent</button>
       </form>
       <p class="help" id="homeHelp"></p>
+      <p class="hero-links"><a class="btn-ghost" href="lookup.html">Look up an agent</a> <a class="btn-ghost" href="methodology.html">Read the honesty table</a></p>
       <div class="examples" aria-label="Examples">
         <a class="example" href="lookup.html?agent=346"><b class="mono">346</b><span>Paid reviewers</span></a>
         <a class="example" href="lookup.html?agent=196"><b class="mono">196</b><span>Money went round in a loop</span></a>
@@ -72,6 +73,20 @@
       </article>
     </section>
 
+    <section class="made-of" aria-labelledby="made-title">
+      <div class="split-head">
+        <h2 id="made-title" class="card-title big-title">What ERC-8004 reputation on Arc is actually made of</h2>
+        <a class="small nowrap" href="lookup.html">Check any agent &rarr;</a>
+      </div>
+      <div class="card table-card">
+        <table class="made-table">
+          <thead><tr><th>Agents</th><th>What the score is built from</th><th>Context</th></tr></thead>
+          <tbody id="made-rows"></tbody>
+        </table>
+      </div>
+      <p class="note" id="made-note"></p>
+    </section>
+
     <p class="own-line" id="own-line" hidden></p>
 
     <section class="steps-section">
@@ -86,7 +101,7 @@
 
     <section class="card evidence-bar">
       <div><b>Evidence, not accusations.</b> <span class="muted">A payment link can be innocent. We show the payments and how many reviewers they rest on. You decide.</span></div>
-      <a href="methodology.html" class="small nowrap">How we check it &rarr;</a>
+      <a href="methodology.html" class="small nowrap">Read the honesty table &rarr;</a>
     </section>
   </main>
 
@@ -121,6 +136,30 @@ document.getElementById("homeIn").onkeydown = (e) => { if (e.key === "Enter") do
   const oneReviewer = idx.agents.filter((a) => a.distinctRaters === 1).length;
   const thin = bv["THIN"] || 0;
   const records = idx.agents.filter((a) => a.record).length;
+
+  // What the score is built from: one row per verdict, counts and examples from the data.
+  const MADE = [
+    ["NO EVIDENCE", "No reviews at all", null],
+    ["THIN", "Every review came from one single address", null],
+    ["SELF REVIEWED", "Reviewed by their own owner, from the owner’s wallet or through a separate wallet whose review the owner sent and paid for", null],
+    ["APP GENERATED", "Scores written by app programs recording outcomes, such as a game scoring a winner and a loser", null],
+    ["OWNER FUNDED", "Reviewers whose wallets were paid by the agent’s own owner, directly or through one other wallet", null],
+    ["ROUND TRIP", "Reviewers paid by the owner who then sent money back to that same owner after rating", null],
+    ["RING", "Each looks like an agent with one ordinary review. Put side by side, the reviewers trace to the same wallet or the same money source", null],
+    ["NO LINK FOUND", "More than one reviewer and no payment link within two steps. Weaker evidence than a link", null],
+  ];
+  const rowsEl = document.getElementById("made-rows");
+  if (rowsEl) {
+    rowsEl.innerHTML = MADE.map(([v, text]) => {
+      const n = v === "NO EVIDENCE" ? none : (bv[v] || 0);
+      const ids = idx.agents.filter((a) => a.verdict === v).slice(0, 4).map((a) => a.agentId);
+      const eg = ids.length ? ` <span class="faint mono">e.g. ${ids.join(", ")}</span>` : "";
+      const tone = v === "NO EVIDENCE" ? "grey" : (["OWNER FUNDED","ROUND TRIP","RING","SELF REVIEWED"].includes(v) ? "red" : "amber");
+      return `<tr><td class="mono num">${fmtN(n)}</td><td>${text}${eg}</td><td>${verdictTag(v, tone)}</td></tr>`;
+    }).join("");
+    setText("made-note", `Measured on Arc mainnet across all ${fmtN(total)} registered agents. None of this is an accusation. A funded campaign can be a legitimate quest, and an app recording wins and losses is working as designed. The point is that all of these render as the same kind of number in a registry, and nothing today tells them apart. Agents with fewer than 3 reviewers are shown in amber on their own page. The labels here are the same words the lookup page, the JSON API and the MCP server use.`);
+  }
+
 
   setText("hero-fact", `Most AI agents on Arc have no reviews. ${fmtN(none)} of the ${fmtN(total)} registered agents have none.`);
   setText("split-total", fmtN(total));
