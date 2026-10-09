@@ -1,0 +1,108 @@
+{
+  "agentId": "14",
+  "owner": "0x092f4483526ebc2476c247cb88d166adb7c3232f",
+  "registeredAtBlock": 21219331,
+  "verdict": "OWNER FUNDED",
+  "tone": "red",
+  "summary": "Money for 50% of the traced raters came from the agent's own owner. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those raters to exist.",
+  "findings": [
+    "1 of 2 raters were paid directly by this agent's own owner.",
+    "1 of the 2 raters checked are contracts rather than wallets."
+  ],
+  "evidence": {
+    "feedbackCount": 9,
+    "distinctRaters": 2,
+    "selfRated": false,
+    "sentByOwner": 0,
+    "ownerFundedDirect": 1,
+    "ownerFundedViaIntermediary": 0,
+    "intermediaries": [],
+    "ratersWithKnownFunder": 2,
+    "ratersTraced": 2,
+    "contractRaters": 1,
+    "applicationRaters": 0,
+    "ratersCheckedForCode": 2,
+    "paidOwnerBeforeRating": 1,
+    "paidOwnerAfterRating": 0,
+    "paidOwnerBeforeAgentExisted": 0,
+    "roundTripped": 0,
+    "rings": [],
+    "registryAverage": 88.67,
+    "independentPaidBeforeRating": 0
+  },
+  "signals": [
+    {
+      "key": "owner_funded_other_agents",
+      "title": "Owner funded other agents' reviewers",
+      "triggered": false,
+      "desc": "This agent's owner has not paid any wallet that reviewed a different agent."
+    },
+    {
+      "key": "cross_agent_review_overlap",
+      "title": "Cross-agent review overlap",
+      "triggered": true,
+      "desc": "1 of this agent's reviewers also reviewed other agents (0x6a663f...59bf: 97 agents). One wallet on several agents is not proof of anything, but it is one identity spread across places that are meant to look independent."
+    },
+    {
+      "key": "circular_funding",
+      "title": "Circular funding",
+      "triggered": true,
+      "desc": "5 reviewers paid money back to a wallet that had funded it (0x73c617...0b8d to 0xde427f...2eda; 0x73c617...0b8d to 0x092f44...232f; 0x73c617...0b8d to 0x64ca39...d058)."
+    },
+    {
+      "key": "funder_fan_out",
+      "title": "Funder fan-out",
+      "triggered": false,
+      "desc": "No funder of this agent's reviewers paid 15 or more wallets over a long span."
+    },
+    {
+      "key": "shared_funding_source",
+      "title": "Shared funding source",
+      "triggered": false,
+      "desc": "No single person-sized wallet paid two or more of this agent's reviewers."
+    },
+    {
+      "key": "wallets_created_together",
+      "title": "Wallets created together",
+      "triggered": false,
+      "desc": "No 3 or more of this agent's reviewers first received money within one day of each other."
+    },
+    {
+      "key": "automated_review_timing",
+      "title": "Automated review timing",
+      "triggered": false,
+      "desc": "No reviewer left 6 or more reviews of this agent at near-identical intervals. Most agents have too few reviews to tell."
+    }
+  ],
+  "proof": {
+    "ownerPaidRater": [
+      {
+        "rater": "0x73c617e808ed5c7ca41413dfc6ee940ddcbb0b8d",
+        "tx": "0x4572b643958f027b6982e89f182579a0d6db89d05f6c2f5b534a6d9ee792fbd9",
+        "dust": false
+      }
+    ],
+    "ownerPaidViaWallet": [],
+    "raterPaidOwner": [
+      {
+        "rater": "0x73c617e808ed5c7ca41413dfc6ee940ddcbb0b8d",
+        "tx": "0x15ded89c138cd99894b537976e18e1e790ee933c51f5b2255e65e731f38044b0",
+        "afterRating": false
+      }
+    ],
+    "record": null
+  },
+  "limits": {
+    "fundingHops": 2,
+    "fundingAsset": "USDC, which is also Arc's gas coin, so plain sends are included",
+    "window": {
+      "fromBlock": 10000000,
+      "toBlock": 25057552
+    },
+    "paymentTiming": "A payment is timed against the payer's FIRST payment to this owner. A later payment by an already-paying wallet is not separately timed. Times are block numbers.",
+    "codeCheckSample": 2,
+    "codeCheckTotal": 2,
+    "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
+  },
+  "generatedAt": "2026-10-09T10:46:31.176Z"
+}

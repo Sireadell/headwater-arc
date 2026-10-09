@@ -1,0 +1,1313 @@
+{
+  "what": "Where each ERC-8004 agent's reputation on Arc actually came from. A verdict describes the origin of the money behind an agent's raters. It is not a judgement of anyone's intent, and a funded campaign can be entirely legitimate.",
+  "usage": {
+    "agent": "GET /headwater-arc/api/agents/{agentId}.json",
+    "absent": "An agent id with no file here has never been rated. Treat that as the verdict NO EVIDENCE, not as an error: it is the normal case on this chain.",
+    "live": "This is a static snapshot, as fresh as generatedAt below. Run the MCP server in mcp/server.mjs for the same answers from your own copy of the data."
+  },
+  "verdicts": {
+    "NO EVIDENCE": "Never rated. Nothing to trust or distrust.",
+    "THIN": "Every rating came from a single address.",
+    "SELF REVIEWED": "The owner's own wallet is among the raters, or the owner sent a review through another wallet.",
+    "APP GENERATED": "Raters are application contracts recording outcomes, not people.",
+    "OWNER FUNDED": "The agent's own owner paid for its raters, directly or via one hop.",
+    "ROUND TRIP": "The owner paid its raters and the same wallets sent funds back to the owner after rating.",
+    "RING": "The agent's raters trace to one money source that also sits behind several other agents.",
+    "NO LINK FOUND": "No funding link found across two hops. Weaker evidence than a link."
+  },
+  "limits": {
+    "fundingHops": 2,
+    "fundingAsset": "USDC (Arc gas coin)",
+    "window": {
+      "fromBlock": 10000000,
+      "toBlock": 25057552
+    },
+    "note": "Absence of a link is weaker evidence than a link."
+  },
+  "counts": {
+    "agentsRegistered": 2316,
+    "agentsEverRated": 127,
+    "byVerdict": {
+      "OWNER FUNDED": 14,
+      "THIN": 85,
+      "NO LINK FOUND": 9,
+      "RING": 15,
+      "ROUND TRIP": 2,
+      "SELF REVIEWED": 2
+    },
+    "rings": 4
+  },
+  "agents": [
+    {
+      "agentId": "0",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 6,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 1,
+      "record": "0x95d14b1eecaf428e73e4e246f938ac240776e5132dda06913c7a861b65fd3d0f"
+    },
+    {
+      "agentId": "1",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 100,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 1,
+      "record": null
+    },
+    {
+      "agentId": "2",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 0,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "3",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 0,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "4",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 0,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "5",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 0,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "8",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 88.33,
+      "distinctRaters": 2,
+      "feedbackCount": 3,
+      "ownerFunded": 1,
+      "record": "0xb8ed78f692856856ebec4e1e2268e613570d5d93aad1cc9fa212e25c85a896a6"
+    },
+    {
+      "agentId": "9",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 88.33,
+      "distinctRaters": 2,
+      "feedbackCount": 3,
+      "ownerFunded": 1,
+      "record": "0x4a2f46496a49b728f490ac6ab8a4ee48080345e91f0b86283ac9987fc032dcb7"
+    },
+    {
+      "agentId": "10",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 84.33,
+      "distinctRaters": 2,
+      "feedbackCount": 3,
+      "ownerFunded": 1,
+      "record": "0x98cf4e2615fe8de3b3f5f7a27f0611b8869b66272c095025befd47fd35a1728c"
+    },
+    {
+      "agentId": "11",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 85,
+      "distinctRaters": 2,
+      "feedbackCount": 2,
+      "ownerFunded": 1,
+      "record": "0xc5cbf78e573cd6415304a5960cad84c195372fbde482c59f767857df3ced30fb"
+    },
+    {
+      "agentId": "12",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 84.33,
+      "distinctRaters": 2,
+      "feedbackCount": 3,
+      "ownerFunded": 1,
+      "record": "0x9d2720f21dca63ee4238de796b6d8b342a89d9d3a01c882ecbf9e414c96838c0"
+    },
+    {
+      "agentId": "13",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 71.67,
+      "distinctRaters": 2,
+      "feedbackCount": 3,
+      "ownerFunded": 1,
+      "record": "0xbe19d8964ea755cb4a7c829c32069c412802c8645427ed5c525c01d82c0508c6"
+    },
+    {
+      "agentId": "14",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 88.67,
+      "distinctRaters": 2,
+      "feedbackCount": 9,
+      "ownerFunded": 1,
+      "record": null
+    },
+    {
+      "agentId": "16",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "17",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "18",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "19",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "20",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "21",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "22",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "23",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "24",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "25",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "26",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "27",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "28",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "29",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "30",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "31",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "32",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "33",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "34",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "35",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "116",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "117",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "133",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 100,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": "0xb8806700c49f8e6f243e09904240790af2e4ad4f03f1c91f05c0f17ea67edf79"
+    },
+    {
+      "agentId": "134",
+      "verdict": "NO LINK FOUND",
+      "tone": "mut",
+      "registryAverage": 86.6,
+      "distinctRaters": 5,
+      "feedbackCount": 10,
+      "ownerFunded": 0,
+      "record": "0xc7adbfb13992eb6a302be80d75fb33c6cc8d6c49206150bd3d2d08fc553a7a36"
+    },
+    {
+      "agentId": "135",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 65,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "136",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 65,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "137",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 88.33,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "138",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "143",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 75,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "176",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 91.47,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "177",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 91.47,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "178",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 91.47,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "179",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 91.47,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "182",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 100,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 1,
+      "record": null
+    },
+    {
+      "agentId": "186",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 91.67,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "192",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 100,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": "0xe588d8d592c16b6963c4996252ee049c9fab1ceb51fd459a4c949f6cd9756450"
+    },
+    {
+      "agentId": "193",
+      "verdict": "NO LINK FOUND",
+      "tone": "mut",
+      "registryAverage": 95.87,
+      "distinctRaters": 3,
+      "feedbackCount": 5,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "196",
+      "verdict": "ROUND TRIP",
+      "tone": "amber",
+      "registryAverage": 98.33,
+      "distinctRaters": 6,
+      "feedbackCount": 9,
+      "ownerFunded": 2,
+      "record": "0x1b0d04d64adc045c09a6d2f6310a1be0e76506fbacf273d41e6957b8a79dc0ea"
+    },
+    {
+      "agentId": "198",
+      "verdict": "NO LINK FOUND",
+      "tone": "mut",
+      "registryAverage": 81,
+      "distinctRaters": 3,
+      "feedbackCount": 5,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "203",
+      "verdict": "ROUND TRIP",
+      "tone": "amber",
+      "registryAverage": 99,
+      "distinctRaters": 3,
+      "feedbackCount": 5,
+      "ownerFunded": 2,
+      "record": "0xdda4468b190bbbcb6f6d8ab08248823fbbb4a2e2340133810f87fb897a22e7eb"
+    },
+    {
+      "agentId": "204",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 96.25,
+      "distinctRaters": 2,
+      "feedbackCount": 4,
+      "ownerFunded": 1,
+      "record": "0xe857bd573a0c078b624767affb7b4b3ecd8177997c8025d2aafdb6a1cde252b2"
+    },
+    {
+      "agentId": "205",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 97,
+      "distinctRaters": 3,
+      "feedbackCount": 5,
+      "ownerFunded": 2,
+      "record": "0x54d1372af8205110ccf1e0212e4d5fb47161f54f70bbc23878c49ec206c7d708"
+    },
+    {
+      "agentId": "207",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 90.3,
+      "distinctRaters": 1,
+      "feedbackCount": 10,
+      "ownerFunded": 0,
+      "record": "0xa9fd23825673cd485abf3d8f331cde3aac50a44a062f405481a1567e7808e9f2"
+    },
+    {
+      "agentId": "209",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 96.25,
+      "distinctRaters": 2,
+      "feedbackCount": 4,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "211",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 90,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "212",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 91.47,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "217",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 91.47,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "218",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 91.47,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "222",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 96,
+      "distinctRaters": 2,
+      "feedbackCount": 4,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "223",
+      "verdict": "SELF REVIEWED",
+      "tone": "red",
+      "registryAverage": 0.01,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": "0xa73b901e9146674051ca0004481da9c8856f54a4bd1c097b8081a6c47104485f"
+    },
+    {
+      "agentId": "228",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 29.13,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "230",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 98.33,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "234",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "240",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 3.74,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "242",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "243",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "244",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "247",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "261",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "262",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "268",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "273",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "289",
+      "verdict": "NO LINK FOUND",
+      "tone": "mut",
+      "registryAverage": 71.66,
+      "distinctRaters": 2,
+      "feedbackCount": 5,
+      "ownerFunded": 0,
+      "record": "0x9e3a7be570e5d066e7ece8f5ceef4fb26ef45847c55323b6aa1d3f862f251505"
+    },
+    {
+      "agentId": "290",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 91.67,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "298",
+      "verdict": "NO LINK FOUND",
+      "tone": "mut",
+      "registryAverage": 92,
+      "distinctRaters": 2,
+      "feedbackCount": 4,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "304",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 97.53,
+      "distinctRaters": 1,
+      "feedbackCount": 4,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "305",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 91.67,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "306",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 91.67,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "307",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 88.33,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "311",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 98.33,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "312",
+      "verdict": "NO LINK FOUND",
+      "tone": "mut",
+      "registryAverage": 96.25,
+      "distinctRaters": 2,
+      "feedbackCount": 4,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "313",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 98.33,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "314",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 98.33,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "315",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 8.33,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "316",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 91.25,
+      "distinctRaters": 2,
+      "feedbackCount": 4,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "318",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 72,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "330",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 90,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "331",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 90,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "332",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 91.67,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "338",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 97.32,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "339",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 97.32,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "340",
+      "verdict": "NO LINK FOUND",
+      "tone": "mut",
+      "registryAverage": 95.49,
+      "distinctRaters": 2,
+      "feedbackCount": 4,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "342",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 97.26,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "345",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 91.67,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 1,
+      "record": null
+    },
+    {
+      "agentId": "346",
+      "verdict": "OWNER FUNDED",
+      "tone": "red",
+      "registryAverage": 41.56,
+      "distinctRaters": 2,
+      "feedbackCount": 16,
+      "ownerFunded": 2,
+      "record": "0xf06a6ec5171b891281ca7e871911e111e99cd6e964afc15a4d686e1827e33dd1"
+    },
+    {
+      "agentId": "348",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 98.33,
+      "distinctRaters": 1,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1352",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 88.75,
+      "distinctRaters": 2,
+      "feedbackCount": 4,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1360",
+      "verdict": "NO LINK FOUND",
+      "tone": "mut",
+      "registryAverage": 89.25,
+      "distinctRaters": 2,
+      "feedbackCount": 4,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1365",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 82.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1368",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 97.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1369",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 97.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1370",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 97.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1379",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 87.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1383",
+      "verdict": "RING",
+      "tone": "amber",
+      "registryAverage": 97.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1384",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 82.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1385",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 82.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1387",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 82.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1390",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 82.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1395",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 82.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1399",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 87.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1407",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 1,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1408",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 1,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1409",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 1,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1410",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 1,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1411",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 1,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1419",
+      "verdict": "SELF REVIEWED",
+      "tone": "red",
+      "registryAverage": 1,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1420",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 0,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1421",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 17.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1422",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 87.5,
+      "distinctRaters": 1,
+      "feedbackCount": 2,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1434",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 90,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "1738",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 90,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "2201",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 90,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": null
+    },
+    {
+      "agentId": "2292",
+      "verdict": "THIN",
+      "tone": "amber",
+      "registryAverage": 90,
+      "distinctRaters": 1,
+      "feedbackCount": 1,
+      "ownerFunded": 0,
+      "record": "0xaed2340c1bc3d522dd175e6be8f5c06049b40af8ce02ebfe59e80209a40f9fc9"
+    },
+    {
+      "agentId": "2306",
+      "verdict": "NO LINK FOUND",
+      "tone": "mut",
+      "registryAverage": 66.7,
+      "distinctRaters": 2,
+      "feedbackCount": 3,
+      "ownerFunded": 0,
+      "record": null
+    }
+  ],
+  "generatedAt": "2026-10-09T10:46:33.858Z"
+}

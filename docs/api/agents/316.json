@@ -1,0 +1,108 @@
+{
+  "agentId": "316",
+  "owner": "0x26bd491560b5175ee8bd1da4998fe260ffc413c9",
+  "registeredAtBlock": 23135316,
+  "verdict": "RING",
+  "tone": "amber",
+  "summary": "This agent's ratings trace to a group that also rated 4 other agents. Looked at alone, this agent's reviews seem ordinary. Looked at across the chain, the same money source sits behind all of them. That describes where the money and the ratings came from, not why, and a group of related agents can be perfectly legitimate. It does mean these reviews are not independent of each other.",
+  "findings": [
+    "The wallet that rated this agent also rated 4 others, and the owners of all 5 were funded by the same wallet, 0x8366a39c... Each agent looks like it has one ordinary review until they are put side by side."
+  ],
+  "evidence": {
+    "feedbackCount": 4,
+    "distinctRaters": 2,
+    "selfRated": false,
+    "sentByOwner": 0,
+    "ownerFundedDirect": 0,
+    "ownerFundedViaIntermediary": 0,
+    "intermediaries": [],
+    "ratersWithKnownFunder": 2,
+    "ratersTraced": 2,
+    "contractRaters": 0,
+    "applicationRaters": 0,
+    "ratersCheckedForCode": 2,
+    "paidOwnerBeforeRating": 0,
+    "paidOwnerAfterRating": 0,
+    "paidOwnerBeforeAgentExisted": 0,
+    "roundTripped": 0,
+    "rings": [
+      {
+        "kind": "one rater, one family of owners",
+        "source": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+        "agents": [
+          "230",
+          "316",
+          "342",
+          "1352",
+          "1383"
+        ],
+        "raters": 1
+      }
+    ],
+    "registryAverage": 91.25,
+    "independentPaidBeforeRating": 0
+  },
+  "signals": [
+    {
+      "key": "owner_funded_other_agents",
+      "title": "Owner funded other agents' reviewers",
+      "triggered": false,
+      "desc": "This agent's owner has not paid any wallet that reviewed a different agent."
+    },
+    {
+      "key": "cross_agent_review_overlap",
+      "title": "Cross-agent review overlap",
+      "triggered": true,
+      "desc": "2 of this agent's reviewers also reviewed other agents (0x246d06...9e5a: 26 agents; 0x6a663f...59bf: 97 agents). One wallet on several agents is not proof of anything, but it is one identity spread across places that are meant to look independent."
+    },
+    {
+      "key": "circular_funding",
+      "title": "Circular funding",
+      "triggered": true,
+      "desc": "2 reviewers paid money back to a wallet that had funded it (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6)."
+    },
+    {
+      "key": "funder_fan_out",
+      "title": "Funder fan-out",
+      "triggered": false,
+      "desc": "No funder of this agent's reviewers paid 15 or more wallets over a long span."
+    },
+    {
+      "key": "shared_funding_source",
+      "title": "Shared funding source",
+      "triggered": false,
+      "desc": "No single person-sized wallet paid two or more of this agent's reviewers."
+    },
+    {
+      "key": "wallets_created_together",
+      "title": "Wallets created together",
+      "triggered": false,
+      "desc": "No 3 or more of this agent's reviewers first received money within one day of each other."
+    },
+    {
+      "key": "automated_review_timing",
+      "title": "Automated review timing",
+      "triggered": false,
+      "desc": "No reviewer left 6 or more reviews of this agent at near-identical intervals. Most agents have too few reviews to tell."
+    }
+  ],
+  "proof": {
+    "ownerPaidRater": [],
+    "ownerPaidViaWallet": [],
+    "raterPaidOwner": [],
+    "record": null
+  },
+  "limits": {
+    "fundingHops": 2,
+    "fundingAsset": "USDC, which is also Arc's gas coin, so plain sends are included",
+    "window": {
+      "fromBlock": 10000000,
+      "toBlock": 25057552
+    },
+    "paymentTiming": "A payment is timed against the payer's FIRST payment to this owner. A later payment by an already-paying wallet is not separately timed. Times are block numbers.",
+    "codeCheckSample": 2,
+    "codeCheckTotal": 2,
+    "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
+  },
+  "generatedAt": "2026-10-09T10:46:31.235Z"
+}

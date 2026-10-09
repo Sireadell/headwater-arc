@@ -1,0 +1,151 @@
+{
+  "agentId": "196",
+  "owner": "0x900c41eda7013b1e1c1ad3af3c47188a04a2160a",
+  "registeredAtBlock": 22492451,
+  "verdict": "ROUND TRIP",
+  "tone": "amber",
+  "summary": "33% of the traced raters were paid by this agent's own owner and then sent funds back to that same owner after rating it. The money left the owner and returned to the owner. How much of it returned is not asserted here, only that it went both ways. This describes where the money moved and not why anyone moved it, and a funded campaign can be entirely legitimate. It does mean that a check asking only 'did the rater pay this agent' would read this agent as customer-backed, which the direction and the timing of the money both contradict.",
+  "findings": [
+    "1 of 6 raters were paid directly by this agent's own owner.",
+    "1 more were paid by the owner through 1 intermediary wallet, which a direct owner-to-rater check does not see.",
+    "2 raters were funded by this agent's owner and then sent funds back to that same owner after rating. The owner's money made a round trip."
+  ],
+  "evidence": {
+    "feedbackCount": 9,
+    "distinctRaters": 6,
+    "selfRated": false,
+    "sentByOwner": 0,
+    "ownerFundedDirect": 1,
+    "ownerFundedViaIntermediary": 1,
+    "intermediaries": [
+      "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+      "0xd492ba6c9d973f9ec8f3cbc749bf6446d65ff5ee",
+      "0x59f2974da895e41a1004cdb020126db9dc8ef4ce",
+      "0x742c45f01c5d91a0063d3531ca037c84c6c399ac",
+      "0xe24d37f3fed8c3d2775b3b0a385247eaf5592c56"
+    ],
+    "ratersWithKnownFunder": 5,
+    "ratersTraced": 6,
+    "contractRaters": 0,
+    "applicationRaters": 0,
+    "ratersCheckedForCode": 6,
+    "paidOwnerBeforeRating": 0,
+    "paidOwnerAfterRating": 2,
+    "paidOwnerBeforeAgentExisted": 0,
+    "roundTripped": 2,
+    "rings": [],
+    "registryAverage": 98.33,
+    "independentPaidBeforeRating": 0
+  },
+  "signals": [
+    {
+      "key": "owner_funded_other_agents",
+      "title": "Owner funded other agents' reviewers",
+      "triggered": true,
+      "desc": "This agent's owner paid wallets that reviewed 2 other agents (205, 193)."
+    },
+    {
+      "key": "cross_agent_review_overlap",
+      "title": "Cross-agent review overlap",
+      "triggered": true,
+      "desc": "5 of this agent's reviewers also reviewed other agents (0x10cf58...58bf: 2 agents; 0xeb0221...782a: 4 agents; 0xaa413e...9f4a: 3 agents; 0x6a663f...59bf: 97 agents). One wallet on several agents is not proof of anything, but it is one identity spread across places that are meant to look independent."
+    },
+    {
+      "key": "circular_funding",
+      "title": "Circular funding",
+      "triggered": true,
+      "desc": "19 reviewers paid money back to a wallet that had funded it (0x10cf58...58bf to 0x5dd2b4...6d75; 0x10cf58...58bf to 0x0ae429...e354; 0x10cf58...58bf to 0x8366a3...0951)."
+    },
+    {
+      "key": "funder_fan_out",
+      "title": "Funder fan-out",
+      "triggered": false,
+      "desc": "No funder of this agent's reviewers paid 15 or more wallets over a long span."
+    },
+    {
+      "key": "shared_funding_source",
+      "title": "Shared funding source",
+      "triggered": false,
+      "desc": "No single person-sized wallet paid two or more of this agent's reviewers."
+    },
+    {
+      "key": "wallets_created_together",
+      "title": "Wallets created together",
+      "triggered": true,
+      "desc": "4 of this agent's reviewers first received money within the same day. Measured from each wallet's first incoming payment, since that is what the payments list holds."
+    },
+    {
+      "key": "automated_review_timing",
+      "title": "Automated review timing",
+      "triggered": false,
+      "desc": "No reviewer left 6 or more reviews of this agent at near-identical intervals. Most agents have too few reviews to tell."
+    }
+  ],
+  "proof": {
+    "ownerPaidRater": [
+      {
+        "rater": "0x10cf585f4131a371669e5e5395f0f4c3069158bf",
+        "tx": "0x49de721bdc893fa1d1c2490c30567bed441f76443a56298488e0e2c13c93907f",
+        "dust": false
+      }
+    ],
+    "ownerPaidViaWallet": [
+      {
+        "rater": "0x10cf585f4131a371669e5e5395f0f4c3069158bf",
+        "via": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+        "ownerToViaTx": "0xc73f1add818aaac70b57b0141b71a13dd96250ff5b5d749a166c98f354e880cc",
+        "viaToRaterTx": "0x8258b092c86bbc5b5325c2cc36229631f2ebf9ac6604332c75168f6babc66641"
+      },
+      {
+        "rater": "0x10cf585f4131a371669e5e5395f0f4c3069158bf",
+        "via": "0xd492ba6c9d973f9ec8f3cbc749bf6446d65ff5ee",
+        "ownerToViaTx": "0x9d2580cae016238f9129a60ecef4ce50705ac7f803d89c5583ba3dd929db43df",
+        "viaToRaterTx": "0xff0d36a125c6e9f44f93741d675d6ca613d76d96eb5266cefa3e27f8250bb5db"
+      },
+      {
+        "rater": "0x10cf585f4131a371669e5e5395f0f4c3069158bf",
+        "via": "0x59f2974da895e41a1004cdb020126db9dc8ef4ce",
+        "ownerToViaTx": "0x08618224d85f067b5977d4c5a345710498c2213f898d11c6d079ff61b08c8dc0",
+        "viaToRaterTx": "0x30c9705d1586a4a5cfa9ad18d49f258d478500ebedbff14ade83a059fd94a8a7"
+      },
+      {
+        "rater": "0x10cf585f4131a371669e5e5395f0f4c3069158bf",
+        "via": "0x742c45f01c5d91a0063d3531ca037c84c6c399ac",
+        "ownerToViaTx": "0x1f83d426705f349c75439f99c504f15fd9fdfd374f40942b00129288d1d09c89",
+        "viaToRaterTx": "0x09dad5c98b685746d67081dd6481727581a6b60f028886d205eaac8950a0e452"
+      },
+      {
+        "rater": "0xeb02212bcb185b75f996bfe9bc638f640f36782a",
+        "via": "0xe24d37f3fed8c3d2775b3b0a385247eaf5592c56",
+        "ownerToViaTx": "0x7bc68beb2b127e381a437350176b632295a71880f14891910c7e7ca02df9842f",
+        "viaToRaterTx": "0x78e91a1f8ac3affcf0e4b6179bee4cec9830f58b2802b66fb572f4e7aefde36a"
+      }
+    ],
+    "raterPaidOwner": [
+      {
+        "rater": "0x10cf585f4131a371669e5e5395f0f4c3069158bf",
+        "tx": "0x02b9153e41e7f3a48c67386c92d2f79f68061b3419de1966bb1b9c966b21723f",
+        "afterRating": true
+      },
+      {
+        "rater": "0xeb02212bcb185b75f996bfe9bc638f640f36782a",
+        "tx": "0x55db775e3f2d2ad8400e1219317c3a272bdafebe72251a3ffc195736276b3c7c",
+        "afterRating": true
+      }
+    ],
+    "record": "0x1b0d04d64adc045c09a6d2f6310a1be0e76506fbacf273d41e6957b8a79dc0ea"
+  },
+  "limits": {
+    "fundingHops": 2,
+    "fundingAsset": "USDC, which is also Arc's gas coin, so plain sends are included",
+    "window": {
+      "fromBlock": 10000000,
+      "toBlock": 25057552
+    },
+    "paymentTiming": "A payment is timed against the payer's FIRST payment to this owner. A later payment by an already-paying wallet is not separately timed. Times are block numbers.",
+    "codeCheckSample": 6,
+    "codeCheckTotal": 6,
+    "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
+  },
+  "generatedAt": "2026-10-09T10:46:31.207Z"
+}

@@ -1,0 +1,101 @@
+{
+  "agentId": "289",
+  "owner": "0x0d4897bf4222deddf8a5b31fa7d8021c369f40d1",
+  "registeredAtBlock": 22843783,
+  "verdict": "NO LINK FOUND",
+  "tone": "mut",
+  "summary": "No funding link was found between this agent's owner and its raters, across both direct payments and one intermediary wallet. 2 of 2 raters have a funding record at all, so absence of a link is weaker evidence than a link would be.",
+  "findings": [
+    "1 rater sent money to the owner's wallet before this agent was registered, then rated it. That pays for the wallet to exist. It is not a customer paying for a service."
+  ],
+  "evidence": {
+    "feedbackCount": 5,
+    "distinctRaters": 2,
+    "selfRated": false,
+    "sentByOwner": 0,
+    "ownerFundedDirect": 0,
+    "ownerFundedViaIntermediary": 0,
+    "intermediaries": [],
+    "ratersWithKnownFunder": 2,
+    "ratersTraced": 2,
+    "contractRaters": 0,
+    "applicationRaters": 0,
+    "ratersCheckedForCode": 2,
+    "paidOwnerBeforeRating": 0,
+    "paidOwnerAfterRating": 0,
+    "paidOwnerBeforeAgentExisted": 1,
+    "roundTripped": 0,
+    "rings": [],
+    "registryAverage": 71.66,
+    "independentPaidBeforeRating": 0
+  },
+  "signals": [
+    {
+      "key": "owner_funded_other_agents",
+      "title": "Owner funded other agents' reviewers",
+      "triggered": false,
+      "desc": "This agent's owner has not paid any wallet that reviewed a different agent."
+    },
+    {
+      "key": "cross_agent_review_overlap",
+      "title": "Cross-agent review overlap",
+      "triggered": true,
+      "desc": "1 of this agent's reviewers also reviewed other agents (0x6a663f...59bf: 97 agents). One wallet on several agents is not proof of anything, but it is one identity spread across places that are meant to look independent."
+    },
+    {
+      "key": "circular_funding",
+      "title": "Circular funding",
+      "triggered": true,
+      "desc": "12 reviewers paid money back to a wallet that had funded it (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6; 0xf0854c...d518 to 0x5bc5ce...d2c1)."
+    },
+    {
+      "key": "funder_fan_out",
+      "title": "Funder fan-out",
+      "triggered": false,
+      "desc": "No funder of this agent's reviewers paid 15 or more wallets over a long span."
+    },
+    {
+      "key": "shared_funding_source",
+      "title": "Shared funding source",
+      "triggered": false,
+      "desc": "No single person-sized wallet paid two or more of this agent's reviewers."
+    },
+    {
+      "key": "wallets_created_together",
+      "title": "Wallets created together",
+      "triggered": false,
+      "desc": "No 3 or more of this agent's reviewers first received money within one day of each other."
+    },
+    {
+      "key": "automated_review_timing",
+      "title": "Automated review timing",
+      "triggered": false,
+      "desc": "No reviewer left 6 or more reviews of this agent at near-identical intervals. Most agents have too few reviews to tell."
+    }
+  ],
+  "proof": {
+    "ownerPaidRater": [],
+    "ownerPaidViaWallet": [],
+    "raterPaidOwner": [
+      {
+        "rater": "0xf0854c4dc9d3f1ebd4f0e44eb91587f7fc5bd518",
+        "tx": "0x5095bc6d4675ef262fdefc6678caafeebc36a8ebca683651d40035c97b1147f0",
+        "afterRating": false
+      }
+    ],
+    "record": "0x9e3a7be570e5d066e7ece8f5ceef4fb26ef45847c55323b6aa1d3f862f251505"
+  },
+  "limits": {
+    "fundingHops": 2,
+    "fundingAsset": "USDC, which is also Arc's gas coin, so plain sends are included",
+    "window": {
+      "fromBlock": 10000000,
+      "toBlock": 25057552
+    },
+    "paymentTiming": "A payment is timed against the payer's FIRST payment to this owner. A later payment by an already-paying wallet is not separately timed. Times are block numbers.",
+    "codeCheckSample": 2,
+    "codeCheckTotal": 2,
+    "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
+  },
+  "generatedAt": "2026-10-09T10:46:31.226Z"
+}

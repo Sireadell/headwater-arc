@@ -1,0 +1,87 @@
+{
+  "rings": [
+    {
+      "kind": "one rater, one family of owners",
+      "source": "0x8f10b468b06c6fd214b65f87778827f7d113f996",
+      "agents": [
+        "176",
+        "177",
+        "178",
+        "179",
+        "212",
+        "306",
+        "1379"
+      ],
+      "raters": [
+        "0x6a663faa871f0622ff2435b65f514faf876c59bf"
+      ],
+      "owners": [
+        "0x6d4f1539ff52e13482918f983dfcdc2054f8ff66",
+        "0x956ffcf509196bf3c5b241859cd27f89aff87c70",
+        "0xcd33c5729c734d0549c8851a4bbac24592673222",
+        "0xebe542b1fd9ab124591f062241d4c759e50ada2c"
+      ]
+    },
+    {
+      "kind": "one rater, one family of owners",
+      "source": "0xa3b06cdd9e166b33074154ced7407b42b5093fd5",
+      "agents": [
+        "209",
+        "222",
+        "230",
+        "342",
+        "1383"
+      ],
+      "raters": [
+        "0x6a663faa871f0622ff2435b65f514faf876c59bf"
+      ],
+      "owners": [
+        "0x10cf585f4131a371669e5e5395f0f4c3069158bf",
+        "0x4af313aa136bd626de91e5dd24de0c907e82505c",
+        "0x4ce087a1cfe3764e65dfdcd4086f8d4565d6b2b3",
+        "0x7baaf7907e0cb8fbf0966587db35cf01c70c6eb3",
+        "0x993f4370b44719fff99dab5efe1258826a0daa54"
+      ]
+    },
+    {
+      "kind": "one rater, one family of owners",
+      "source": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+      "agents": [
+        "230",
+        "316",
+        "342",
+        "1352",
+        "1383"
+      ],
+      "raters": [
+        "0x6a663faa871f0622ff2435b65f514faf876c59bf"
+      ],
+      "owners": [
+        "0x10cf585f4131a371669e5e5395f0f4c3069158bf",
+        "0x26bd491560b5175ee8bd1da4998fe260ffc413c9",
+        "0x4af313aa136bd626de91e5dd24de0c907e82505c",
+        "0x993f4370b44719fff99dab5efe1258826a0daa54"
+      ]
+    },
+    {
+      "kind": "one rater, one family of owners",
+      "source": "0x4e3bcce28caf98a143fd8bd9e4875ccab3e7bbe0",
+      "agents": [
+        "137",
+        "209",
+        "222",
+        "1383"
+      ],
+      "raters": [
+        "0x6a663faa871f0622ff2435b65f514faf876c59bf"
+      ],
+      "owners": [
+        "0x4af313aa136bd626de91e5dd24de0c907e82505c",
+        "0x4ce087a1cfe3764e65dfdcd4086f8d4565d6b2b3",
+        "0x7baaf7907e0cb8fbf0966587db35cf01c70c6eb3",
+        "0xd3b0846711c2ba1dec908b6c80f52679208c7691"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-09T10:46:31.160Z"
+}

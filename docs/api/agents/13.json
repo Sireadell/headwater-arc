@@ -1,0 +1,101 @@
+{
+  "agentId": "13",
+  "owner": "0xc3b7e37158d20e0e463ac456f1bd0a86dbf88ca7",
+  "registeredAtBlock": 21214637,
+  "verdict": "OWNER FUNDED",
+  "tone": "red",
+  "summary": "Money for 50% of the traced raters came from the agent's own owner. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those raters to exist.",
+  "findings": [
+    "1 of 2 raters were paid directly by this agent's own owner."
+  ],
+  "evidence": {
+    "feedbackCount": 3,
+    "distinctRaters": 2,
+    "selfRated": false,
+    "sentByOwner": 0,
+    "ownerFundedDirect": 1,
+    "ownerFundedViaIntermediary": 0,
+    "intermediaries": [],
+    "ratersWithKnownFunder": 2,
+    "ratersTraced": 2,
+    "contractRaters": 0,
+    "applicationRaters": 0,
+    "ratersCheckedForCode": 2,
+    "paidOwnerBeforeRating": 0,
+    "paidOwnerAfterRating": 0,
+    "paidOwnerBeforeAgentExisted": 0,
+    "roundTripped": 0,
+    "rings": [],
+    "registryAverage": 71.67,
+    "independentPaidBeforeRating": 0
+  },
+  "signals": [
+    {
+      "key": "owner_funded_other_agents",
+      "title": "Owner funded other agents' reviewers",
+      "triggered": true,
+      "desc": "This agent's owner paid wallets that reviewed 5 other agents (8, 9, 10, 12, 11)."
+    },
+    {
+      "key": "cross_agent_review_overlap",
+      "title": "Cross-agent review overlap",
+      "triggered": true,
+      "desc": "2 of this agent's reviewers also reviewed other agents (0xe8f96a...1611: 6 agents; 0x6a663f...59bf: 97 agents). One wallet on several agents is not proof of anything, but it is one identity spread across places that are meant to look independent."
+    },
+    {
+      "key": "circular_funding",
+      "title": "Circular funding",
+      "triggered": true,
+      "desc": "2 reviewers paid money back to a wallet that had funded it (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6)."
+    },
+    {
+      "key": "funder_fan_out",
+      "title": "Funder fan-out",
+      "triggered": false,
+      "desc": "No funder of this agent's reviewers paid 15 or more wallets over a long span."
+    },
+    {
+      "key": "shared_funding_source",
+      "title": "Shared funding source",
+      "triggered": false,
+      "desc": "No single person-sized wallet paid two or more of this agent's reviewers."
+    },
+    {
+      "key": "wallets_created_together",
+      "title": "Wallets created together",
+      "triggered": false,
+      "desc": "No 3 or more of this agent's reviewers first received money within one day of each other."
+    },
+    {
+      "key": "automated_review_timing",
+      "title": "Automated review timing",
+      "triggered": false,
+      "desc": "No reviewer left 6 or more reviews of this agent at near-identical intervals. Most agents have too few reviews to tell."
+    }
+  ],
+  "proof": {
+    "ownerPaidRater": [
+      {
+        "rater": "0xe8f96a363f0d340dd57c0a87df1109f9841a1611",
+        "tx": "0x348cb568d3130865a58394767c6ece7411284900eb394acbc4296d65b8ebac57",
+        "dust": false
+      }
+    ],
+    "ownerPaidViaWallet": [],
+    "raterPaidOwner": [],
+    "record": "0xbe19d8964ea755cb4a7c829c32069c412802c8645427ed5c525c01d82c0508c6"
+  },
+  "limits": {
+    "fundingHops": 2,
+    "fundingAsset": "USDC, which is also Arc's gas coin, so plain sends are included",
+    "window": {
+      "fromBlock": 10000000,
+      "toBlock": 25057552
+    },
+    "paymentTiming": "A payment is timed against the payer's FIRST payment to this owner. A later payment by an already-paying wallet is not separately timed. Times are block numbers.",
+    "codeCheckSample": 2,
+    "codeCheckTotal": 2,
+    "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
+  },
+  "generatedAt": "2026-10-09T10:46:31.175Z"
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Headwater on Arc · Methodology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <div id="chrome"></div>
+  <div class="method-head">
+    <h1 class="disp">Honesty table</h1>
+    <p>What is real, what is limited, and what is not built. Plain statements, checkable in the code, not buried in comments.</p>
+  </div>
+  <div class="method-body">
+
+    <div>
+      <div class="method-section-title"><div class="method-dot" style="background:var(--green);"></div><span class="disp" style="font-size:14px;font-weight:600;">Real</span></div>
+      <div class="method-list">
+        <div class="method-row"><div class="method-label">ERC-8004 registry reads</div><div class="method-desc">Calls the live Identity and Reputation registries on Arc mainnet (0x8004A169&hellip;, 0x8004BAa1&hellip;). Every agent id the registry holds is read, and every review event is saved with the wallet that sent it.</div></div>
+        <div class="method-row"><div class="method-label">USDC payments</div><div class="method-desc">On Arc, USDC is the coin that pays fees, so a plain send leaves no ordinary token log. Arc&rsquo;s system address writes one log for every USDC move, valued with 18 digits instead of 6. Headwater reads those logs and divides by 10<sup>12</sup>. Checked against live receipts.</div></div>
+        <div class="method-row"><div class="method-label">Hand-checked findings</div><div class="method-desc">Agent 346 and agent 8 were checked against the chain&rsquo;s own receipts: sender, receiver and amount matched. A separate tester rebuilt the whole audit from a fresh copy and got identical results for all 116 agents, then re-checked 13 funding payments against receipts.</div></div>
+        <div class="method-row"><div class="method-label">Records on Arc</div><div class="method-desc">Findings are written to Arc mainnet as small transactions carrying readable text. Open one on the explorer, click &ldquo;View details&rdquo;, and switch the data to UTF-8.</div></div>
+        <div class="method-row"><div class="method-label">Same rules as the Monad build</div><div class="method-desc">The verdict rules are a port of the ones in the Monad version of Headwater, and the 29 tests that cover them were carried over and pass unchanged. Only the data source differs: a saved list of Arc payments instead of an indexer.</div></div>
+        <div class="method-row"><div class="method-label">Seven signals under each verdict</div><div class="method-desc">Owner funded other agents&rsquo; reviewers, cross-agent review overlap, circular funding, funder fan-out, shared funding source, wallets created together, and automated review timing. Context only: each says what it saw and never changes a verdict by itself.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="method-section-title"><div class="method-dot" style="background:var(--amber);"></div><span class="disp" style="font-size:14px;font-weight:600;">Limited, and disclosed</span></div>
+      <div class="method-list">
+        <div class="method-row"><div class="method-label">Two funding hops</div><div class="method-desc">Owner to reviewer, and owner to one wallet to reviewer. A longer chain is not followed, so absence of a link is weaker evidence than a link.</div></div>
+        <div class="method-row"><div class="method-label">Window starts at block 10,000,000</div><div class="method-desc">Payments before that are not in view. The payment log is empty in the first 5,000,000 blocks and nearly empty around 10,000,000, so little is lost, but I can&rsquo;t prove nothing earlier matters.</div></div>
+        <div class="method-row"><div class="method-label">Reviewers with no funder found</div><div class="method-desc">Four reviewers have no funding payment in the window. They show no link either way, and the verdicts say how many reviewers of each agent have a funding record.</div></div>
+        <div class="method-row"><div class="method-label">Busy wallets are set aside</div><div class="method-desc">Nine wallets with thousands of payments (exchanges, bridges, faucets) are ignored as funders, because being paid by one links you to nobody. The agent&rsquo;s own owner is never set aside, so an owner that happens to be busy still counts.</div></div>
+        <div class="method-row"><div class="method-label">Small top-ups count</div><div class="method-desc">A small payment from an owner to a reviewer is counted, and marked as a top-up on the lookup page. Many such links look like a developer funding a test wallet to pay fees. Read the amount.</div></div>
+        <div class="method-row"><div class="method-label">Payment timing</div><div class="method-desc">&ldquo;Paid before rating&rdquo; compares the payer&rsquo;s first payment to the owner against the payer&rsquo;s first review. A later payment by an already-paying wallet is not timed separately. Times are block numbers, about two a second.</div></div>
+        <div class="method-row"><div class="method-label">Code check is a sample</div><div class="method-desc">Up to 40 reviewers per agent are checked for contract code. The sample size is stated on every verdict.</div></div>
+        <div class="method-row"><div class="method-label">Review rings the check cannot see</div><div class="method-desc">Owners that review each other&rsquo;s agents in a loop are not detected when a busy wallet funded all of them. A hand test found one such loop (agents 1407 to 1411). The big reviewer 0x6a663f also reviews agent 228 while the owner of that agent reviews agent 211, which it owns.</div></div>
+        <div class="method-row"><div class="method-label">My own wallet</div><div class="method-desc">The wallet that wrote the records on Arc (0xb3FB&hellip;2B53) left one review, on agent 192, and was also the first to send money to agent 192&rsquo;s owner. The lookup page for agent 192 shows exactly what that does to its verdict.</div></div>
+        <div class="method-row"><div class="method-label">Snapshot, not live</div><div class="method-desc">Verdicts are rebuilt by hand from saved data. Only the newest-ratings feed on the home page reads Arc live.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="method-section-title"><div class="method-dot" style="background:var(--text-faint);"></div><span class="disp" style="font-size:14px;font-weight:600;">Not built</span></div>
+      <div class="method-list">
+        <div class="method-row"><div class="method-label">Wallet reputation labels</div><div class="method-desc">No outside label service is used. Headwater reads the chain only.</div></div>
+        <div class="method-row"><div class="method-label">Automatic refresh</div><div class="method-desc">The audit is rerun by hand with the scripts in the README. A scheduled rebuild is the next step.</div></div>
+        <div class="method-row"><div class="method-label">Automatic records</div><div class="method-desc">New findings are written to Arc by hand, because doing it automatically would need a wallet key on a server.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="method-section-title"><div class="method-dot" style="background:var(--accent);"></div><span class="disp" style="font-size:14px;font-weight:600;">What the verdicts mean</span></div>
+      <div class="method-list">
+        <div class="method-row"><div class="method-label">NO EVIDENCE</div><div class="method-desc">Never rated. Nothing to trust or distrust.</div></div>
+        <div class="method-row"><div class="method-label">THIN</div><div class="method-desc">Every rating came from one address. One address agreeing with itself is one opinion, however many times it is recorded.</div></div>
+        <div class="method-row"><div class="method-label">SELF REVIEWED</div><div class="method-desc">The owner&rsquo;s wallet is among the raters, or the owner sent and paid for a review that carries another wallet&rsquo;s name. Comparing addresses misses that; the transaction shows who really sent it.</div></div>
+        <div class="method-row"><div class="method-label">APP GENERATED</div><div class="method-desc">Most raters are application contracts recording outcomes (for example a game&rsquo;s winner and loser). That is the standard working, not a warning, but it is not customers vouching for the agent.</div></div>
+        <div class="method-row"><div class="method-label">OWNER FUNDED</div><div class="method-desc">The agent&rsquo;s own owner paid for its raters, directly or through one wallet. Not an accusation: a paid campaign can be legitimate. It means much of the score is not independent evidence.</div></div>
+        <div class="method-row"><div class="method-label">ROUND TRIP</div><div class="method-desc">The owner paid the raters, and the same wallets sent money back to the owner after rating. Ranked above OWNER FUNDED because it says more, and below APP GENERATED because an application returning a balance is ordinary.</div></div>
+        <div class="method-row"><div class="method-label">RING</div><div class="method-desc">The agent&rsquo;s raters trace to one money source, or one reviewer, that also sits behind several other agents. Each agent looks ordinary alone. A shared funder only counts where the wallets it funded are at least half of that agent&rsquo;s raters.</div></div>
+        <div class="method-row"><div class="method-label">NO LINK FOUND</div><div class="method-desc">More than one reviewer, and no funding link across two hops. Weaker evidence than a link.</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="method-section-title"><div class="method-dot" style="background:var(--accent);"></div><span class="disp" style="font-size:14px;font-weight:600;">Callable by an agent, not just readable by a person</span></div>
+      <div class="method-list">
+        <div class="method-row"><div class="method-label">JSON API</div><div class="method-desc"><a href="api/index.json">api/index.json</a> lists every rated agent. <a href="api/agents/346.json">api/agents/346.json</a> is one full report. <a href="api/rings.json">api/rings.json</a> lists the groups. No key, no server. An agent id with no file has never been rated.</div></div>
+        <div class="method-row"><div class="method-label">MCP server</div><div class="method-desc">mcp/server.mjs lets an AI agent ask &ldquo;what is this agent&rsquo;s reputation made of?&rdquo; before it pays or trusts another agent. See the README for the one-line setup.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="site.js"></script>
+<script>chrome("methodology.html");</script>
+</body>
+</html>
