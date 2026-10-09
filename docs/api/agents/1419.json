@@ -6,8 +6,8 @@
   "tone": "red",
   "summary": "This agent's own owner sent the review on it, through a separate wallet that never paid for anything itself. Comparing the reviewer's address with the owner's address misses this, because the addresses differ. The transaction that carried the review shows who actually sent it.",
   "findings": [
-    "1 rater wallet did not send its own review. This agent's owner sent and paid for the review transaction, so that review is the owner's, written through another address.",
-    "1 of the 1 raters checked are contracts rather than wallets.",
+    "1 reviewer wallet did not send its own review. This agent's owner sent and paid for the review transaction, so that review is the owner's, written through another address.",
+    "1 of the 1 reviewers checked are contracts rather than wallets.",
     "Every rating came from one single address."
   ],
   "evidence": {
@@ -93,5 +93,5 @@
     "codeCheckTotal": 1,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T11:15:10.251Z"
+  "generatedAt": "2026-10-09T18:52:34.294Z"
 }

@@ -3,24 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Headwater on Arc · Agent Lookup</title>
+<title>Agent lookup · Headwater on Arc</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="page">
   <div id="chrome"></div>
-  <form class="lookup-form" onsubmit="return false;">
-    <label class="lookup-label mono" for="agentId">Agent ID (ERC-8004 identity registry on Arc)</label>
-    <div class="lookup-row">
-      <input id="agentId" type="text" inputmode="numeric" value="346">
-      <button id="checkBtn" type="button">Check</button>
-    </div>
-    <p class="lookup-help">Reads the published snapshot of the Identity and Reputation registries at 0x8004A169... and 0x8004BAa1... on Arc mainnet, cross-referenced against each wallet&rsquo;s own USDC payment history. Every payment named below links to the Arc explorer.</p>
-  </form>
-  <div id="results"></div>
+  <main class="wrap">
+    <section class="lookup-head">
+      <p class="eyebrow">Agent lookup</p>
+      <form class="lookup-form" onsubmit="return false;">
+        <label class="field-label" for="agentId">Agent number</label>
+        <div class="lookup-row">
+          <input id="agentId" type="text" inputmode="numeric" value="346" autocomplete="off">
+          <button id="checkBtn" class="btn" type="button">Check</button>
+        </div>
+        <p class="help" id="helpLine"></p>
+      </form>
+      <div class="examples" aria-label="Examples">
+        <button type="button" class="example" data-example="346"><b class="mono">346</b><span>Paid reviewers</span></button>
+        <button type="button" class="example" data-example="196"><b class="mono">196</b><span>Money went round in a loop</span></button>
+        <button type="button" class="example" data-example="1"><b class="mono">1</b><span>One review</span></button>
+        <button type="button" class="example" data-example="500"><b class="mono">500</b><span>No reviews yet</span></button>
+      </div>
+    </section>
+    <div id="results" aria-live="polite"></div>
+  </main>
+  <footer class="foot">
+    <span>Headwater on Arc · evidence, not accusations</span>
+    <a href="methodology.html">How we check it</a>
+  </footer>
 </div>
 <script src="site.js"></script>
 <script src="lookup.js"></script>

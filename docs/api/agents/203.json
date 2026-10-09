@@ -4,11 +4,11 @@
   "registeredAtBlock": 22552901,
   "verdict": "ROUND TRIP",
   "tone": "amber",
-  "summary": "33% of the traced raters were paid by this agent's own owner and then sent funds back to that same owner after rating it. The money left the owner and returned to the owner. How much of it returned is not asserted here, only that it went both ways. This describes where the money moved and not why anyone moved it, and a funded campaign can be entirely legitimate. It does mean that a check asking only 'did the rater pay this agent' would read this agent as customer-backed, which the direction and the timing of the money both contradict.",
+  "summary": "1 of 3 traced reviewers was paid by this agent's own owner and then sent funds back to that same owner after rating it. The money left the owner and returned to the owner. How much of it returned is not asserted here, only that it went both ways. This describes where the money moved and not why anyone moved it, and a funded campaign can be entirely legitimate. It does mean that a check asking only 'did the reviewer pay this agent' would read this agent as customer-backed, which the direction and the timing of the money both contradict.",
   "findings": [
-    "1 of 3 raters were paid directly by this agent's own owner.",
-    "1 more were paid by the owner through 1 intermediary wallet, which a direct owner-to-rater check does not see.",
-    "1 rater was funded by this agent's owner and then sent funds back to that same owner after rating. The owner's money made a round trip."
+    "1 of 3 reviewers were paid directly by this agent's own owner.",
+    "1 more reviewer was paid by the owner through 1 intermediary wallet, which a direct owner-to-reviewer check does not see.",
+    "1 reviewer was funded by this agent's owner and then sent funds back to that same owner after rating. The owner's money made a round trip."
   ],
   "evidence": {
     "feedbackCount": 5,
@@ -50,7 +50,7 @@
       "key": "circular_funding",
       "title": "Circular funding",
       "triggered": true,
-      "desc": "2 reviewers paid money back to a wallet that had funded it (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6)."
+      "desc": "1 reviewer paid money back to a wallet that had funded them (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6)."
     },
     {
       "key": "funder_fan_out",
@@ -114,5 +114,5 @@
     "codeCheckTotal": 3,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T11:15:09.823Z"
+  "generatedAt": "2026-10-09T18:52:34.167Z"
 }

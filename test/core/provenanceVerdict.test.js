@@ -75,7 +75,7 @@ test('owner funding of every traced rater is reported as owner funded', () => {
   const v = buildVerdict({ ...base, funding: funding({ direct: 3, traced: 3 }) });
   assert.equal(v.label, 'OWNER FUNDED');
   assert.equal(v.tone, 'red');
-  assert.match(v.summary, /100%/);
+  assert.match(v.summary, /All 3 traced reviewers/);
 });
 
 test('a minority share of owner funding is not coloured like a total one', () => {
@@ -83,7 +83,7 @@ test('a minority share of owner funding is not coloured like a total one', () =>
   const v = buildVerdict({ ...base, funding: funding({ direct: 1, traced: 3 }) });
   assert.equal(v.label, 'OWNER FUNDED');
   assert.equal(v.tone, 'amber');
-  assert.match(v.summary, /33%/);
+  assert.match(v.summary, /1 of 3 traced reviewers/);
 });
 
 test('funding routed through an intermediary still counts as owner funded', () => {
@@ -196,7 +196,7 @@ test('money that leaves the owner and comes back is named as a round trip', () =
   const paid = funded.direct.map((d) => d.rater);
   const v = buildVerdict({ ...base, funding: funded, payments: payments({ after: paid, traced: 3 }) });
   assert.equal(v.label, 'ROUND TRIP');
-  assert.match(v.summary, /100%/);
+  assert.match(v.summary, /3 of 3 traced reviewers/);
   assert.ok(
     v.findings.some((f) => /round trip/i.test(f)),
     'a reader must be able to see the movement, not only the label',

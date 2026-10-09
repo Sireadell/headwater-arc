@@ -126,6 +126,8 @@ fs.writeFileSync('docs/api/rings.json', JSON.stringify({ rings, generatedAt: new
 
 // Pass 2: verdicts.
 const summary = [];
+// One noun for the person behind a review, on every screen and in every sentence.
+const plain = (s) => (typeof s === 'string' ? s.replace(/\brater(s?)\b/g, 'reviewer$1').replace(/\bRater(s?)\b/g, 'Reviewer$1') : s);
 for (const id of ratedIds) {
   const f = facts.get(id);
   const myRings = rings.filter((r) => r.agents.includes(String(id)));
@@ -138,8 +140,8 @@ for (const id of ratedIds) {
     registeredAtBlock: registered.get(id) ?? null,
     verdict: verdict.label,
     tone: verdict.tone,
-    summary: verdict.summary,
-    findings: verdict.findings,
+    summary: plain(verdict.summary),
+    findings: verdict.findings.map(plain),
     evidence: {
       feedbackCount: f.feedbackCount,
       distinctRaters: f.raters.length,
@@ -161,7 +163,7 @@ for (const id of ratedIds) {
       registryAverage: (() => { const rows = byAgent.get(id); const vals = rows.map((r) => Number(r.value) / 10 ** r.valueDecimals); return Math.round((vals.reduce((x, y) => x + y, 0) / vals.length) * 100) / 100; })(),
       independentPaidBeforeRating: f.payments.paidBefore.filter((p) => !ownerFundedSet.has(p.rater)).length,
     },
-    signals: signalsFor(sigCtx, { agentId: id, owner: f.owner, raters: f.raters }),
+    signals: signalsFor(sigCtx, { agentId: id, owner: f.owner, raters: f.raters }).map((s) => ({ ...s, title: plain(s.title), desc: plain(s.desc) })),
     // Payments a reader can open on the explorer to check the verdict.
     proof: {
       ownerPaidRater: f.funding.direct.map((d) => ({ rater: d.rater, tx: first.get(d.rater)?.get(f.owner)?.tx ?? null, dust: d.isDust })),

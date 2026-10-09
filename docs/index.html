@@ -3,115 +3,164 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Headwater on Arc</title>
-<meta name="description" content="Where the reviews of AI agents on Arc come from: who paid for the reviewers, and a record of each finding on Arc itself.">
+<title>Headwater on Arc · Who reviews AI agents</title>
+<meta name="description" content="Headwater checks who paid the people who wrote each review of an AI agent on Arc.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="page">
   <div id="chrome"></div>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="eyebrow mono">ERC-8004 reputation context &middot; Arc mainnet</div>
-      <h1 class="disp hero-title">A review score doesn&rsquo;t say who paid for the reviewers.</h1>
-      <p class="hero-sub">Arc keeps a public list of reviews for every AI agent. Nothing tells you what that list is made of. Headwater follows the money behind every reviewer, so you can see whether an agent&rsquo;s score is broad, thin, written by its own owner, paid for, or produced by a game. Every finding is also written onto Arc, so you can check it yourself.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="lookup.html">Look up an agent</a>
-        <a class="btn btn-ghost" href="methodology.html">Read the honesty table</a>
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Who reviews AI agents on Arc</p>
+      <h1 class="hero-title">A review score doesn&rsquo;t say who paid for the reviewers.<span class="hero-second" id="hero-fact"></span></h1>
+      <p class="lead">Headwater checks who paid the people who wrote each review, so you can see when an agent&rsquo;s own owner paid for them. An average score does not show that.</p>
+
+      <form class="search" onsubmit="return false;">
+        <label class="sr-only" for="homeIn">Agent number</label>
+        <input id="homeIn" type="text" inputmode="numeric" autocomplete="off" placeholder="Type an agent number">
+        <button id="homeGo" class="btn" type="button">Check agent</button>
+      </form>
+      <p class="help" id="homeHelp"></p>
+      <div class="examples" aria-label="Examples">
+        <a class="example" href="lookup.html?agent=346"><b class="mono">346</b><span>Paid reviewers</span></a>
+        <a class="example" href="lookup.html?agent=196"><b class="mono">196</b><span>Money went round in a loop</span></a>
+        <a class="example" href="lookup.html?agent=1"><b class="mono">1</b><span>One review</span></a>
+        <a class="example" href="lookup.html?agent=500"><b class="mono">500</b><span>No reviews yet</span></a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="stats" id="stats"></section>
+    <section class="split-card" aria-labelledby="split-title">
+      <div class="split-head">
+        <h2 id="split-title" class="card-title">All <span id="split-total">2,316</span> registered agents</h2>
+        <span class="mono small muted" id="split-note"></span>
+      </div>
+      <div class="bar" role="img" aria-label="Split of all agents: no reviews, reviewed with no warning sign, warning sign">
+        <span id="bar-none" class="bar-none"></span><span id="bar-clear" class="bar-clear"></span><span id="bar-flag" class="bar-flag"></span>
+      </div>
+      <div class="legend">
+        <span><i class="sw sw-none"></i><b id="lg-none"></b> no reviews yet</span>
+        <span><i class="sw sw-clear"></i><b id="lg-clear"></b> reviewed, no warning sign</span>
+        <span><i class="sw sw-flag"></i><b id="lg-flag"></b> with a warning sign about who paid their reviewers</span>
+      </div>
+    </section>
 
-  <section class="finding live">
-    <div class="finding-head">
-      <h2 class="disp">Newest ratings, straight from Arc</h2>
-      <span class="mono live-status" id="live-status">loading</span>
-    </div>
-    <div id="live-feed" class="live-feed"><div class="live-row">Loading the newest ratings&hellip;</div></div>
-    <p class="footnote">The newest ratings come from the snapshot, and a few seconds after the page opens it asks Arc&rsquo;s public node for anything newer. The label is the verdict from the published snapshot. An agent rated since then shows NEW SINCE SNAPSHOT, and its verdict is only worked out at the next rebuild.</p>
-  </section>
+    <section class="stat-grid" id="stats" aria-label="Key numbers"></section>
 
-  <section class="finding">
-    <div class="finding-head">
-      <h2 class="disp">What the reviews on Arc are made of</h2>
-      <a href="scoreboard.html">See every agent &rarr;</a>
-    </div>
-    <div class="table" id="made-of"></div>
-    <p class="footnote" id="made-of-note"></p>
-  </section>
+    <section class="two-col">
+      <article class="card">
+        <p class="eyebrow">One agent, two readings</p>
+        <h2 class="card-title big-title">An average does not show who paid.</h2>
+        <p class="muted">Agent <span id="ag-id">196</span> has an average score. The average does not show who paid for its reviewers.</p>
+        <p class="stat-big" id="ag-big"></p>
+        <p class="small muted" id="ag-small"></p>
+        <a class="small" id="ag-link" href="lookup.html?agent=196">See the payments &rarr;</a>
+      </article>
 
-  <section class="finding">
-    <div class="finding-head">
-      <h2 class="disp">The same agent, two readings</h2>
-      <span id="compare-link"></span>
-    </div>
-    <div class="compare" id="compare"></div>
-    <p class="footnote">Both readings are correct about what they measure. The registry average counts the scores people left. Headwater asks where the reviewers&rsquo; money came from, which is a different question, and the only one that sees a paid campaign.</p>
-  </section>
+      <article class="card" id="feed-card">
+        <div class="split-head">
+          <h2 class="card-title">Newest reviews</h2>
+          <span class="mono small" id="live-status">Checking Arc&hellip;</span>
+        </div>
+        <p class="feed-sentence" id="feed-sentence"></p>
+        <div id="live-feed" class="feed"><div class="feed-row muted">Loading the newest reviews&hellip;</div></div>
+        <p class="note" id="live-note">Newest reviews on Arc. Checked each time you open this page.</p>
+      </article>
+    </section>
 
-  <section class="finding">
-    <div class="finding-head">
-      <h2 class="disp">Check it on Arc yourself</h2>
-    </div>
-    <p style="max-width:760px;font-size:14px;line-height:1.65;color:var(--text-dim)">For every agent with a finding, a small transaction on Arc mainnet carries the verdict and the payments behind it as readable text. Open it on the explorer, click &ldquo;View details&rdquo;, and switch the data to UTF-8. Then open the payment it names. They match, or I&rsquo;m wrong, and the chain shows which.</p>
-    <p class="footnote" id="records-note"></p>
-  </section>
+    <p class="own-line" id="own-line" hidden></p>
+
+    <section class="steps-section">
+      <h2 class="card-title">Check one record yourself</h2>
+      <p class="muted small" id="records-note"></p>
+      <ol class="steps">
+        <li class="card step"><b>Open the record.</b><span class="muted small">Each agent with a finding has a &ldquo;Saved on Arc&rdquo; link on its lookup page.</span></li>
+        <li class="card step"><b>Open the payments it names.</b><span class="muted small">Every payment on the lookup page links its own transaction on the Arc explorer.</span></li>
+        <li class="card step"><b>Check the two addresses.</b><span class="muted small">The sender and receiver should match the addresses our page showed.</span></li>
+      </ol>
+    </section>
+
+    <section class="card evidence-bar">
+      <div><b>Evidence, not accusations.</b> <span class="muted">A payment link can be innocent. We show the payments and how many reviewers they rest on. You decide.</span></div>
+      <a href="methodology.html" class="small nowrap">How we check it &rarr;</a>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Headwater on Arc · evidence, not accusations</span>
+    <a href="https://github.com/Sireadell/headwater-arc" target="_blank" rel="noopener">View source</a>
+  </footer>
 </div>
 <script src="site.js"></script>
 <script src="live.js"></script>
 <script>
 chrome("index.html");
+const fmtN = (n) => Number(n).toLocaleString("en-US");
+const setText = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
+
+document.getElementById("homeGo").onclick = () => {
+  const v = document.getElementById("homeIn").value.trim();
+  if (v) location.href = `lookup.html?agent=${encodeURIComponent(v)}`;
+};
+document.getElementById("homeIn").onkeydown = (e) => { if (e.key === "Enter") document.getElementById("homeGo").click(); };
+
 (async () => {
-  const idx = await getJson("api/index.json");
+  const idx = await loadIndex();
   const c = idx.counts;
   const bv = c.byVerdict;
-  const flagged = (bv["OWNER FUNDED"] ?? 0) + (bv["ROUND TRIP"] ?? 0) + (bv["SELF REVIEWED"] ?? 0) + (bv["RING"] ?? 0);
-  document.getElementById("stats").innerHTML = [
-    [c.agentsRegistered.toLocaleString("en-US"), "agents registered on Arc mainnet, all read"],
-    [c.agentsEverRated, "of them have received any review"],
-    [bv["THIN"] ?? 0, "of those have every review from one single address"],
-    [flagged, "have a money link: owner funded, round trip, self reviewed or ring"],
-  ].map(([n, l]) => `<div class="stat"><div class="stat-num mono disp">${n}</div><div class="stat-label">${l}</div></div>`).join("");
-
-  const order = [
-    ["NO EVIDENCE", "No reviews at all", c.agentsRegistered - c.agentsEverRated],
-    ["THIN", "Every review came from one single address", bv["THIN"]],
-    ["SELF REVIEWED", "The agent's own owner sent the review, through another wallet or its own", bv["SELF REVIEWED"]],
-    ["APP GENERATED", "Scores written by game contracts recording match results", bv["APP GENERATED"]],
-    ["OWNER FUNDED", "The agent's own owner paid for its reviewers, directly or through one wallet", bv["OWNER FUNDED"]],
-    ["ROUND TRIP", "The owner paid the reviewers, and money came back to the owner after the rating", bv["ROUND TRIP"]],
-    ["RING", "One reviewer, or one money source, behind several agents that each look like they have one ordinary review", bv["RING"]],
-    ["NO LINK FOUND", "More than one reviewer and no funding link found", bv["NO LINK FOUND"]],
-  ].filter(([, , n]) => n);
-  document.getElementById("made-of").innerHTML = `<div class="table-head"><div class="col col-wallet mono">AGENTS</div><div class="col col-agents mono" style="width:auto;flex:3">WHAT THE SCORE IS BUILT FROM</div><div class="col col-signal mono">CONTEXT</div></div>` +
-    order.map(([v, text, n]) => `<div class="table-row"><div class="col col-wallet mono">${n.toLocaleString("en-US")}</div><div class="col col-agents" style="width:auto;flex:3">${text}</div><div class="col col-signal">${badge(v)}</div></div>`).join("");
-  document.getElementById("made-of-note").textContent = `Measured on Arc mainnet from block ${idx.limits.window.fromBlock.toLocaleString("en-US")} to ${idx.limits.window.toBlock.toLocaleString("en-US")}, across all ${c.agentsRegistered.toLocaleString("en-US")} registered agents. None of this is an accusation. A funded campaign can be legitimate, and a game contract reporting wins and losses is the standard working. The badges are the same words the lookup page, the JSON API and the MCP server use.`;
-
-  // The same agent, two readings: pick the strongest finding that has a registry average.
-  const pick = idx.agents.filter((a) => a.verdict === "ROUND TRIP")[0] || idx.agents.filter((a) => a.verdict === "OWNER FUNDED")[0];
-  if (pick) {
-    const a = await getJson(`api/agents/${pick.agentId}.json`);
-    const n = a.evidence.ownerFundedDirect + a.evidence.ownerFundedViaIntermediary;
-    document.getElementById("compare-link").innerHTML = `<a href="lookup.html?agent=${a.agentId}">See agent ${a.agentId} &rarr;</a>`;
-    document.getElementById("compare").innerHTML = `
-      <div class="compare-card"><div class="compare-src mono">ARC REGISTRY</div>
-        <div class="compare-num mono disp">${a.evidence.registryAverage}</div>
-        <div class="compare-label">average score across ${a.evidence.feedbackCount} review${a.evidence.feedbackCount === 1 ? "" : "s"}</div>
-        <p>This is what the registry shows for agent ${a.agentId}: a score and a count. It does not say who the ${a.evidence.distinctRaters} reviewer${a.evidence.distinctRaters === 1 ? " is" : "s are"} or where their money came from.</p></div>
-      <div class="compare-card compare-ours"><div class="compare-src mono">HEADWATER</div>
-        <div class="compare-num mono disp">${n}<span>/${a.evidence.ratersTraced}</span></div>
-        <div class="compare-label">reviewers paid by the agent&rsquo;s own owner</div>
-        <p>${esc(a.findings[0] || "")} ${badge(a.verdict, a.tone)}</p></div>`;
-  }
+  const total = c.agentsRegistered;
+  const rated = c.agentsEverRated;
+  const none = total - rated;
+  const flagParts = [["OWNER FUNDED", "owner funded"], ["RING", "ring"], ["ROUND TRIP", "round trip"], ["SELF REVIEWED", "self reviewed"]];
+  const flagged = flagParts.reduce((s, [k]) => s + (bv[k] || 0), 0);
+  const clear = rated - flagged;
+  const oneReviewer = idx.agents.filter((a) => a.distinctRaters === 1).length;
+  const thin = bv["THIN"] || 0;
   const records = idx.agents.filter((a) => a.record).length;
-  document.getElementById("records-note").innerHTML = `${records} agents currently have a record on Arc. <a href="scoreboard.html">The scoreboard</a> links each one.`;
-})().catch((e) => { document.getElementById("stats").innerHTML = `<div class="error-state">Could not load the data: ${esc(e.message)}</div>`; });
+
+  setText("hero-fact", `Most AI agents on Arc have no reviews. ${fmtN(none)} of the ${fmtN(total)} registered agents have none.`);
+  setText("split-total", fmtN(total));
+  setText("split-note", "checked against Arc payment history");
+  document.getElementById("bar-none").style.width = (none / total * 100) + "%";
+  document.getElementById("bar-clear").style.width = (clear / total * 100) + "%";
+  document.getElementById("bar-flag").style.width = (flagged / total * 100) + "%";
+  setText("lg-none", fmtN(none));
+  setText("lg-clear", fmtN(clear));
+  setText("lg-flag", fmtN(flagged));
+
+  const breakdown = flagParts.filter(([k]) => bv[k]).map(([k, label]) => `${bv[k]} ${label}`).join(", ");
+  document.getElementById("stats").innerHTML = [
+    [fmtN(rated), `agents have at least one review`, `of ${fmtN(total)} registered`],
+    [fmtN(oneReviewer), `of those have every review from one reviewer`, `of ${fmtN(rated)} reviewed. ${fmtN(thin)} get the THIN label.`],
+    [fmtN(flagged), `of those have a warning sign about who paid their reviewers`, `of ${fmtN(rated)} reviewed. ${breakdown}.`],
+  ].map(([n, l, b]) => `<div class="card stat"><div class="stat-num disp">${n}</div><div class="stat-label">${l}</div><div class="stat-base mono">${b}</div></div>`).join("");
+
+  setText("records-note", `The ${fmtN(records)} agents with a finding also have it written onto Arc, so you can check one yourself.`);
+
+  // Agent 196 as a second reading. Its payment counts come from its own file.
+  const a196 = await getJson("api/agents/196.json").catch(() => null);
+  if (a196) {
+    const e = a196.evidence;
+    const paid = e.ownerFundedDirect + e.ownerFundedViaIntermediary;
+    setText("ag-big", `${paid} of ${e.distinctRaters} reviewers were paid by the owner`);
+    setText("ag-small", `${e.ownerFundedDirect} directly, ${e.ownerFundedViaIntermediary} through another wallet. ${e.roundTripped} of them sent money back to the owner.`);
+  }
+
+  // Headwater's own record wallet appears in agent 192's file. Show the line only if it does.
+  const a192 = await getJson("api/agents/192.json").catch(() => null);
+  if (a192 && JSON.stringify(a192).toLowerCase().includes(HEADWATER_WALLET)) {
+    const own = document.getElementById("own-line");
+    own.hidden = false;
+    const n = a192.evidence.feedbackCount;
+    own.innerHTML = `Headwater's own record wallet left ${n === 1 ? "one review" : n + " reviews"}, on agent 192. <a href="lookup.html?agent=192">Its page says so.</a>`;
+  }
+})().catch((err) => {
+  document.getElementById("stats").innerHTML = `<div class="notice">The numbers could not load. Try again in a moment.</div>`;
+});
 </script>
 </body>
 </html>

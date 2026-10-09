@@ -78,7 +78,7 @@ export function signalsFor(ctx, { agentId, owner, raters }) {
   out.push({
     key: 'circular_funding', title: 'Circular funding', triggered: circular.length > 0,
     desc: circular.length > 0
-      ? `${circular.length} reviewer${circular.length === 1 ? '' : 's'} paid money back to a wallet that had funded it (${circular.slice(0, 3).map((c) => `${short(c.r)} to ${short(c.f)}`).join('; ')}).`
+      ? `${new Set(circular.map((c) => c.r)).size} reviewer${new Set(circular.map((c) => c.r)).size === 1 ? '' : 's'} paid money back to a wallet that had funded them (${circular.slice(0, 3).map((c) => `${short(c.r)} to ${short(c.f)}`).join('; ')}).`
       : 'No reviewer paid money back to a wallet that funded it.',
   });
 

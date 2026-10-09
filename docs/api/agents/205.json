@@ -4,11 +4,11 @@
   "registeredAtBlock": 22554342,
   "verdict": "OWNER FUNDED",
   "tone": "red",
-  "summary": "Money for 67% of the traced raters came from the agent's own owner. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those raters to exist.",
+  "summary": "2 of 3 traced reviewers were paid by the agent's own owner. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those reviewers to exist.",
   "findings": [
-    "1 of 3 raters were paid directly by this agent's own owner.",
-    "1 more were paid by the owner through 1 intermediary wallet, which a direct owner-to-rater check does not see.",
-    "1 rater sent money to the owner's wallet before this agent was registered, then rated it. That pays for the wallet to exist. It is not a customer paying for a service."
+    "1 of 3 reviewers were paid directly by this agent's own owner.",
+    "1 more reviewer was paid by the owner through 1 intermediary wallet, which a direct owner-to-reviewer check does not see.",
+    "1 reviewer sent money to the owner's wallet before this agent was registered, then rated it. That pays for the wallet to exist. It is not a customer paying for a service."
   ],
   "evidence": {
     "feedbackCount": 5,
@@ -50,7 +50,7 @@
       "key": "circular_funding",
       "title": "Circular funding",
       "triggered": true,
-      "desc": "2 reviewers paid money back to a wallet that had funded it (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6)."
+      "desc": "1 reviewer paid money back to a wallet that had funded them (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6)."
     },
     {
       "key": "funder_fan_out",
@@ -114,5 +114,5 @@
     "codeCheckTotal": 3,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T11:15:09.837Z"
+  "generatedAt": "2026-10-09T18:52:34.171Z"
 }

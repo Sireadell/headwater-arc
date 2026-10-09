@@ -3,11 +3,11 @@
   "owner": "0x092f4483526ebc2476c247cb88d166adb7c3232f",
   "registeredAtBlock": 21219331,
   "verdict": "OWNER FUNDED",
-  "tone": "red",
-  "summary": "Money for 50% of the traced raters came from the agent's own owner. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those raters to exist.",
+  "tone": "amber",
+  "summary": "1 of 2 traced reviewers was paid by the agent's own owner. That is too few reviewers to call a pattern. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those reviewers to exist.",
   "findings": [
-    "1 of 2 raters were paid directly by this agent's own owner.",
-    "1 of the 2 raters checked are contracts rather than wallets."
+    "1 of 2 reviewers were paid directly by this agent's own owner.",
+    "1 of the 2 reviewers checked are contracts rather than wallets."
   ],
   "evidence": {
     "feedbackCount": 9,
@@ -47,7 +47,7 @@
       "key": "circular_funding",
       "title": "Circular funding",
       "triggered": true,
-      "desc": "5 reviewers paid money back to a wallet that had funded it (0x73c617...0b8d to 0xde427f...2eda; 0x73c617...0b8d to 0x092f44...232f; 0x73c617...0b8d to 0x64ca39...d058)."
+      "desc": "2 reviewers paid money back to a wallet that had funded them (0x73c617...0b8d to 0xde427f...2eda; 0x73c617...0b8d to 0x092f44...232f; 0x73c617...0b8d to 0x64ca39...d058)."
     },
     {
       "key": "funder_fan_out",
@@ -104,5 +104,5 @@
     "codeCheckTotal": 2,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T11:15:09.551Z"
+  "generatedAt": "2026-10-09T18:52:34.087Z"
 }

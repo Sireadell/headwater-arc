@@ -6,7 +6,7 @@
   "tone": "amber",
   "summary": "Every rating on this agent came from a single address. 102 of the 127 rated agents on Arc are in this position. One address agreeing with itself repeatedly is one opinion, however many times it is recorded.",
   "findings": [
-    "1 rater paid this agent's owner BEFORE rating it and was not funded by that owner. That is the strongest grounding available here, and it is rare: 2 such relationships exist across the whole chain.",
+    "1 reviewer paid this agent's owner BEFORE rating it and was not funded by that owner. That is the strongest grounding available here, and it is rare: 2 such relationships exist across the whole chain.",
     "Every rating came from one single address."
   ],
   "evidence": {
@@ -98,5 +98,5 @@
     "codeCheckTotal": 1,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T11:15:10.320Z"
+  "generatedAt": "2026-10-09T18:52:34.306Z"
 }

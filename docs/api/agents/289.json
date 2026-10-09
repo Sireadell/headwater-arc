@@ -4,9 +4,9 @@
   "registeredAtBlock": 22843783,
   "verdict": "NO LINK FOUND",
   "tone": "mut",
-  "summary": "No funding link was found between this agent's owner and its raters, across both direct payments and one intermediary wallet. 2 of 2 raters have a funding record at all, so absence of a link is weaker evidence than a link would be.",
+  "summary": "No funding link was found between this agent's owner and its reviewers, across both direct payments and one intermediary wallet. 2 of 2 reviewers have a funding record at all, so absence of a link is weaker evidence than a link would be.",
   "findings": [
-    "1 rater sent money to the owner's wallet before this agent was registered, then rated it. That pays for the wallet to exist. It is not a customer paying for a service."
+    "1 reviewer sent money to the owner's wallet before this agent was registered, then rated it. That pays for the wallet to exist. It is not a customer paying for a service."
   ],
   "evidence": {
     "feedbackCount": 5,
@@ -46,7 +46,7 @@
       "key": "circular_funding",
       "title": "Circular funding",
       "triggered": true,
-      "desc": "12 reviewers paid money back to a wallet that had funded it (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6; 0xf0854c...d518 to 0x5bc5ce...d2c1)."
+      "desc": "2 reviewers paid money back to a wallet that had funded them (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6; 0xf0854c...d518 to 0x5bc5ce...d2c1)."
     },
     {
       "key": "funder_fan_out",
@@ -97,5 +97,5 @@
     "codeCheckTotal": 2,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T11:15:09.948Z"
+  "generatedAt": "2026-10-09T18:52:34.214Z"
 }

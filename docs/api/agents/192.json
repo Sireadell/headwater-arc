@@ -6,7 +6,7 @@
   "tone": "amber",
   "summary": "Every rating on this agent came from a single address. 102 of the 127 rated agents on Arc are in this position. One address agreeing with itself repeatedly is one opinion, however many times it is recorded.",
   "findings": [
-    "1 rater sent money to the owner's wallet before this agent was registered, then rated it. That pays for the wallet to exist. It is not a customer paying for a service.",
+    "1 reviewer sent money to the owner's wallet before this agent was registered, then rated it. That pays for the wallet to exist. It is not a customer paying for a service.",
     "Every rating came from one single address."
   ],
   "evidence": {
@@ -47,7 +47,7 @@
       "key": "circular_funding",
       "title": "Circular funding",
       "triggered": true,
-      "desc": "1 reviewer paid money back to a wallet that had funded it (0xb3fb14...2b53 to 0x57229f...ce31)."
+      "desc": "1 reviewer paid money back to a wallet that had funded them (0xb3fb14...2b53 to 0x57229f...ce31)."
     },
     {
       "key": "funder_fan_out",
@@ -98,5 +98,5 @@
     "codeCheckTotal": 1,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T11:15:09.793Z"
+  "generatedAt": "2026-10-09T18:52:34.158Z"
 }

@@ -3,64 +3,95 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Headwater on Arc · Scoreboard</title>
+<title>Scoreboard · Headwater on Arc</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<style>
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
-.filters button{background:var(--surface);color:var(--text-dim);border:1px solid var(--border);padding:7px 12px;font-size:13px;border-radius:2px;cursor:pointer;font-family:inherit}
-.filters button.on{border-color:var(--accent);color:var(--accent)}
-.tablewrap{overflow:auto;max-height:560px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
-.tablewrap table{border-collapse:collapse;width:100%;font-size:13px}
-.tablewrap th,.tablewrap td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border-soft);white-space:nowrap}
-.tablewrap th{color:var(--text-mut);font-weight:500;cursor:pointer;position:sticky;top:0;background:var(--surface2)}
-.tablewrap tbody tr{cursor:pointer}.tablewrap tbody tr:hover{background:var(--surface2)}
-</style>
 </head>
 <body>
 <div class="page">
   <div id="chrome"></div>
-  <div class="scoreboard-head">
-    <h1 class="disp">Scoreboard</h1>
-    <p>Every agent on Arc that has been reviewed, with the verdict Headwater gives it. Click a column to sort, a row to open the agent, and the record link to read the finding on Arc itself.</p>
-  </div>
-  <div class="score-stats" id="score-stats"></div>
-  <div class="scoreboard-body">
-    <div class="filters" id="filters"></div>
-    <div class="tablewrap"><table id="tbl"><thead><tr>
-      <th data-k="agentId">Agent</th><th data-k="verdict">Verdict</th><th data-k="distinctRaters">Reviewers</th><th data-k="feedbackCount">Reviews</th><th data-k="registryAverage">Registry avg</th><th data-k="ownerFunded">Paid by owner</th><th>Record on Arc</th>
-    </tr></thead><tbody></tbody></table></div>
-    <p class="footnote" id="gen"></p>
-  </div>
+  <main class="wrap">
+    <section class="page-head">
+      <p class="eyebrow">Scoreboard</p>
+      <h1 class="page-title" id="sb-title">The agents that have reviews</h1>
+      <p class="lead" id="sb-lead"></p>
+    </section>
+
+    <div class="chips" id="chips" role="group" aria-label="Filter by verdict"></div>
+
+    <div class="card table-card">
+      <table class="board">
+        <thead>
+          <tr><th scope="col">Agent</th><th scope="col">Verdict</th><th scope="col">Reviewers</th><th scope="col">Reviews</th><th scope="col">Strength</th><th scope="col">Saved on Arc</th></tr>
+        </thead>
+        <tbody id="rows"><tr><td colspan="6" class="muted">Loading the agents&hellip;</td></tr></tbody>
+      </table>
+    </div>
+    <p class="note" id="sb-note"></p>
+  </main>
+  <footer class="foot">
+    <span>Headwater on Arc · evidence, not accusations</span>
+    <a href="methodology.html">How we check it</a>
+  </footer>
 </div>
 <script src="site.js"></script>
 <script>
 chrome("scoreboard.html");
+const ORDER = ["ROUND TRIP", "SELF REVIEWED", "OWNER FUNDED", "RING", "THIN", "NO LINK FOUND", "APP GENERATED"];
+let current = "ALL";
+let agents = [];
+
+const rank = (a) => ORDER.indexOf(a.verdict) === -1 ? 99 : ORDER.indexOf(a.verdict);
+
+function sorted(list) {
+  return [...list].sort((x, y) =>
+    rank(x) - rank(y)
+    || (x.distinctRaters < 3) - (y.distinctRaters < 3)
+    || Number(x.agentId) - Number(y.agentId));
+}
+
+function drawChips(idx) {
+  const counts = idx.counts.byVerdict;
+  const keys = ORDER.filter((k) => counts[k]);
+  const chip = (key, label, n) => `<button type="button" class="chip${current === key ? " on" : ""}" data-key="${key}" aria-pressed="${current === key}">${label} <b class="mono">${fmt(n)}</b></button>`;
+  document.getElementById("chips").innerHTML =
+    chip("ALL", "All", agents.length) + keys.map((k) => chip(k, k, counts[k])).join("");
+  document.querySelectorAll("#chips .chip").forEach((b) => {
+    b.onclick = () => { current = b.dataset.key; drawChips(idx); drawRows(); };
+  });
+}
+
+function drawRows() {
+  const list = sorted(current === "ALL" ? agents : agents.filter((a) => a.verdict === current));
+  document.getElementById("rows").innerHTML = list.map((a) => {
+    const tone = toneOf(a.verdict, a.distinctRaters, a.tone);
+    return `<tr>
+      <td data-label="Agent"><a class="mono" href="lookup.html?agent=${a.agentId}">Agent ${a.agentId}</a></td>
+      <td data-label="Verdict">${verdictTag(a.verdict, tone)}</td>
+      <td data-label="Reviewers">${a.distinctRaters}</td>
+      <td data-label="Reviews">${a.feedbackCount}</td>
+      <td data-label="Strength">${strengthHtml(a.distinctRaters)}</td>
+      <td data-label="Saved on Arc">${a.record ? txLink(a.record, "Saved") : `<span class="muted">Not yet</span>`}</td>
+    </tr>`;
+  }).join("") || `<tr><td colspan="6" class="muted">No agents with this verdict.</td></tr>`;
+}
+
 (async () => {
-  const idx = await getJson("api/index.json");
-  const bv = idx.counts.byVerdict;
-  document.getElementById("score-stats").innerHTML = [
-    [idx.counts.agentsEverRated, "agents reviewed", ""],
-    [(bv["OWNER FUNDED"] ?? 0) + (bv["ROUND TRIP"] ?? 0), "owner funded or round trip", "var(--red)"],
-    [(bv["RING"] ?? 0) + (bv["SELF REVIEWED"] ?? 0), "ring or self reviewed", "var(--amber)"],
-    [bv["THIN"] ?? 0, "thin: one single reviewer", "var(--amber)"],
-  ].map(([n, l, c]) => `<div class="score-stat"><div class="score-stat-num mono disp" style="${c ? "color:" + c : ""}">${n}</div><div class="score-stat-label">${l}</div></div>`).join("");
-  const verdicts = ["ALL", ...Object.keys(idx.verdicts).filter((v) => v !== "NO EVIDENCE" && bv[v])];
-  let flt = "ALL", sk = "agentId", sd = 1;
-  const draw = () => {
-    document.getElementById("filters").innerHTML = verdicts.map((v) => `<button data-f="${v}" class="${v === flt ? "on" : ""}">${v === "ALL" ? "All" : v} ${v === "ALL" ? "" : "(" + bv[v] + ")"}</button>`).join("");
-    const rows = idx.agents.filter((a) => flt === "ALL" || a.verdict === flt).map((a) => ({ ...a, agentId: Number(a.agentId) }))
-      .sort((a, b) => (a[sk] > b[sk] ? 1 : a[sk] < b[sk] ? -1 : 0) * sd);
-    document.querySelector("#tbl tbody").innerHTML = rows.map((a) => `<tr data-id="${a.agentId}"><td><b>${a.agentId}</b></td><td>${badge(a.verdict, a.tone)}</td><td>${a.distinctRaters}</td><td>${a.feedbackCount}</td><td>${a.registryAverage}</td><td>${a.ownerFunded}</td><td>${a.record ? txLink(a.record) : '<span style="color:var(--text-faint)">none yet</span>'}</td></tr>`).join("");
-  };
-  draw();
-  document.getElementById("filters").onclick = (e) => { const b = e.target.closest("button"); if (b) { flt = b.dataset.f; draw(); } };
-  document.querySelector("#tbl thead").onclick = (e) => { const k = e.target.dataset.k; if (!k) return; sd = sk === k ? -sd : 1; sk = k; draw(); };
-  document.querySelector("#tbl tbody").onclick = (e) => { if (e.target.closest("a")) return; const tr = e.target.closest("tr"); if (tr) location.href = `lookup.html?agent=${tr.dataset.id}`; };
-  document.getElementById("gen").textContent = `Snapshot generated ${idx.generatedAt.slice(0, 16).replace("T", " ")} UTC. Agents with no review are not listed, because they all read NO EVIDENCE.`;
-})().catch((e) => { document.getElementById("gen").textContent = "Could not load the data: " + e.message; });
+  const idx = await loadIndex();
+  agents = idx.agents;
+  const c = idx.counts;
+  document.getElementById("sb-title").textContent = `The ${fmt(c.agentsEverRated)} agents that have reviews`;
+  document.getElementById("sb-lead").textContent =
+    `The other ${fmt(c.agentsRegistered - c.agentsEverRated)} registered agents have none. Rows with fewer than 3 reviewers are marked amber, because a verdict on one or two reviewers is a lead, not a finding.`;
+  document.getElementById("sb-note").textContent =
+    `All ${fmt(agents.length)} agents with reviews, from our last check. Within each verdict, agents with 3 or more reviewers come first.`;
+  drawChips(idx);
+  drawRows();
+})().catch(() => {
+  document.getElementById("rows").innerHTML = `<tr><td colspan="6" class="notice">The agent list could not load. Try again in a moment.</td></tr>`;
+});
 </script>
 </body>
 </html>

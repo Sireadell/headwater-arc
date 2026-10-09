@@ -3,10 +3,10 @@
   "owner": "0xeb02212bcb185b75f996bfe9bc638f640f36782a",
   "registeredAtBlock": 22553815,
   "verdict": "OWNER FUNDED",
-  "tone": "red",
-  "summary": "Money for 50% of the traced raters came from the agent's own owner. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those raters to exist.",
+  "tone": "amber",
+  "summary": "1 of 2 traced reviewers was paid by the agent's own owner. That is too few reviewers to call a pattern. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those reviewers to exist.",
   "findings": [
-    "1 of 2 raters were paid directly by this agent's own owner."
+    "1 of 2 reviewers were paid directly by this agent's own owner."
   ],
   "evidence": {
     "feedbackCount": 4,
@@ -46,7 +46,7 @@
       "key": "circular_funding",
       "title": "Circular funding",
       "triggered": true,
-      "desc": "2 reviewers paid money back to a wallet that had funded it (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6)."
+      "desc": "1 reviewer paid money back to a wallet that had funded them (0x6a663f...59bf to 0xd334ab...17ed; 0x6a663f...59bf to 0x74a442...fdc6)."
     },
     {
       "key": "funder_fan_out",
@@ -97,5 +97,5 @@
     "codeCheckTotal": 2,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T11:15:09.831Z"
+  "generatedAt": "2026-10-09T18:52:34.169Z"
 }

@@ -3,10 +3,10 @@
   "owner": "0xd305607510e0db2c95807173c7a05bea53c1ed36",
   "registeredAtBlock": 21156191,
   "verdict": "OWNER FUNDED",
-  "tone": "red",
-  "summary": "Money for 100% of the traced raters came from the agent's own owner. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those raters to exist.",
+  "tone": "amber",
+  "summary": "The only traced reviewer was paid by the agent's own owner. That is too few reviewers to call a pattern. That is not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does mean that much of the score is not independent evidence, because the party being rated paid for those reviewers to exist.",
   "findings": [
-    "1 of 1 raters were paid directly by this agent's own owner.",
+    "1 of 1 reviewers were paid directly by this agent's own owner.",
     "Every rating came from one single address."
   ],
   "evidence": {
@@ -98,5 +98,5 @@
     "codeCheckTotal": 1,
     "note": "A verdict is a statement about where money came from, not about anyone's intent. Absence of a funding link is weaker evidence than a link, because a wallet funded outside the scanned window, or through a wallet not paid directly, is not visible."
   },
-  "generatedAt": "2026-10-09T11:15:09.427Z"
+  "generatedAt": "2026-10-09T18:52:34.059Z"
 }

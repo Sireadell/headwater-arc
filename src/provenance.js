@@ -328,8 +328,11 @@ function buildVerdict({ owner, reviewers, feedbackCount, funding, raterTypes, se
   if (indirectOnly.length > 0) {
     const vias = new Set(indirectOnly.map((i) => i.via));
     findings.push(
-      `${new Set(indirectOnly.map((i) => i.rater)).size} more were paid by the owner through ${vias.size} ` +
-        `intermediary wallet${vias.size === 1 ? "" : "s"}, which a direct owner-to-rater check does not see.`,
+      (() => {
+        const n = new Set(indirectOnly.map((i) => i.rater)).size;
+        return `${n} ${directSet.size > 0 ? "more " : ""}${n === 1 ? "reviewer was" : "reviewers were"} paid by the owner through ${vias.size} ` +
+          `intermediary wallet${vias.size === 1 ? "" : "s"}, which a direct owner-to-rater check does not see.`;
+      })(),
     );
   }
   // Money that left the owner and came back. Stated as a movement, because
@@ -429,13 +432,14 @@ function buildVerdict({ owner, reviewers, feedbackCount, funding, raterTypes, se
   // repeat this project's one serious mistake.
   if (roundTrip.length > 0) {
     const share = Math.round((roundTrip.length / Math.max(funding.tracedRaters, 1)) * 100);
+    const fewRaters = funding.tracedRaters < 3;
     return {
       label: "ROUND TRIP",
       // Same reason as OWNER FUNDED: a half is a real finding and is not
       // painted the same as a whole.
-      tone: share >= 50 ? "red" : "amber",
+      tone: share >= 50 && !fewRaters ? "red" : "amber",
       summary:
-        `${share}% of the traced raters were paid by this agent's own owner and then sent funds ` +
+        `${roundTrip.length} of ${funding.tracedRaters} traced reviewer${funding.tracedRaters === 1 ? "" : "s"} ${roundTrip.length === 1 ? "was" : "were"} paid by this agent's own owner and then sent funds ` +
         "back to that same owner after rating it. The money left the owner and returned to the " +
         "owner. How much of it returned is not asserted here, only that it went both ways. This " +
         "describes where the money moved and not why anyone moved it, and a funded campaign can " +
@@ -447,14 +451,16 @@ function buildVerdict({ owner, reviewers, feedbackCount, funding, raterTypes, se
   }
   if (ownerPaid > 0) {
     const share = Math.round((ownerPaid / Math.max(funding.tracedRaters, 1)) * 100);
+    const fewRaters = funding.tracedRaters < 3;
     return {
       label: "OWNER FUNDED",
       // A minority share is a real finding but not the whole picture, so it is
       // not dressed in the same colour as an agent whose entire rater base was
       // paid for by the party being rated.
-      tone: share >= 50 ? "red" : "amber",
+      tone: share >= 50 && !fewRaters ? "red" : "amber",
       summary:
-        `Money for ${share}% of the traced raters came from the agent's own owner. That is ` +
+        `${ownerPaid === funding.tracedRaters ? (ownerPaid === 1 ? "The only traced reviewer" : "All " + ownerPaid + " traced reviewers") : ownerPaid + " of " + funding.tracedRaters + " traced reviewers"} ${ownerPaid === 1 ? "was" : "were"} paid by the agent's own owner. ` +
+        `${fewRaters ? "That is too few reviewers to call a pattern. " : ""}That is ` +
         "not an accusation of fraud, and a paid campaign can be perfectly legitimate. It does " +
         "mean that much of the score is not independent evidence, because the party being " +
         "rated paid for those raters to exist.",
