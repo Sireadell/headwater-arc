@@ -34,6 +34,9 @@ button{padding:10px 16px;border-radius:8px;border:0;background:var(--accent);col
 .body{padding:0 14px 14px;border-top:1px solid var(--border)}
 .rev{margin-top:12px}.rev ul{margin:4px 0 6px 18px;padding:0}
 .ok{color:var(--green)}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}th{color:var(--mut);font-weight:500;cursor:pointer;white-space:nowrap}tbody tr{cursor:pointer}tbody tr:hover{background:var(--surface)}
+.tablewrap{max-height:420px;overflow:auto;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.filters button{background:var(--surface);color:var(--text);border:1px solid var(--border);padding:6px 12px;font-size:14px}.filters button.on{border-color:var(--accent);color:var(--accent)}
 footer{margin-top:48px;color:var(--mut);font-size:14px}
 </style>
 </head>
@@ -50,6 +53,10 @@ footer{margin-top:48px;color:var(--mut);font-size:14px}
 <h2>Look up an agent</h2>
 <div class="search"><input id="q" inputmode="numeric" placeholder="Agent number, for example 346" aria-label="Agent number"><button id="go">Check</button></div>
 <div id="answer" class="mut">Type an agent number from 0 to 2313.</div>
+
+<h2>All 116 reviewed agents</h2>
+<div class="filters" id="filters"></div>
+<div class="tablewrap"><table id="tbl"><thead><tr><th data-k="agentId">Agent</th><th data-k="reviewers">Reviewers</th><th data-k="linked">Linked</th><th data-k="status">Result</th><th>Record on Arc</th></tr></thead><tbody></tbody></table></div>
 
 <h2>The 19 agents with a money link</h2>
 <p class="mut">Each one has a record on Arc. Open it and the wallets and the funding payment are written inside, in plain text.</p>
@@ -95,6 +102,18 @@ fetch('data.json').then(r=>r.json()).then(d=>{
   document.getElementById('nofunder').textContent=`${d.reviewersWithNoFunderFound} reviewers have no funding payment I could find at all, so they show no link either way.`;
   document.getElementById('tip').textContent=s.window.toBlock.toLocaleString('en-US');
   document.getElementById('wl').href=`${EX}/address/${W}`;
+  const LBL={NO_FUNDING_LINK_FOUND:'No link found',SOME_REVIEWERS_LINKED:'Some linked',ALL_REVIEWERS_LINKED:'Every reviewer linked'};
+  let flt='ALL',sk='agentId',sd=1;
+  const FL=[['ALL','All'],['SOME_REVIEWERS_LINKED','Some linked'],['ALL_REVIEWERS_LINKED','Every reviewer linked'],['NO_FUNDING_LINK_FOUND','No link found']];
+  function drawTable(){
+    document.getElementById('filters').innerHTML=FL.map(([k,l])=>`<button data-f="${k}" class="${k===flt?'on':''}">${l}</button>`).join('');
+    const rows=d.rows.filter(r=>flt==='ALL'||r.status===flt).sort((a,b)=>(a[sk]>b[sk]?1:a[sk]<b[sk]?-1:0)*sd);
+    document.querySelector('#tbl tbody').innerHTML=rows.map(r=>`<tr data-id="${r.agentId}"><td><b>${r.agentId}</b></td><td>${r.reviewers}</td><td>${r.linked}</td><td>${LBL[r.status]}${r.unknown&&r.status==='NO_FUNDING_LINK_FOUND'?' <span class="mut">(some funders unknown)</span>':''}</td><td>${r.memoTx?tx(r.memoTx):'<span class="mut">none needed</span>'}</td></tr>`).join('');
+  }
+  drawTable();
+  document.getElementById('filters').onclick=e=>{const b=e.target.closest('button');if(b){flt=b.dataset.f;drawTable()}};
+  document.querySelector('#tbl thead').onclick=e=>{const k=e.target.dataset.k;if(!k)return;sd=sk===k?-sd:1;sk=k;drawTable()};
+  document.querySelector('#tbl tbody').onclick=e=>{if(e.target.closest('a'))return;const tr=e.target.closest('tr');if(!tr)return;document.getElementById('q').value=tr.dataset.id;document.getElementById('go').click();document.getElementById('q').scrollIntoView({behavior:'smooth',block:'center'})};
   const clean=new Set(d.cleanAgentIds),unknown=new Set(d.cleanWithUnknownFunders);
   function look(){
     const v=document.getElementById('q').value.trim(),a=document.getElementById('answer');

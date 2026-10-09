@@ -25,5 +25,6 @@ const flagged = audit.results.filter((r) => r.flaggedReviewers > 0).map((r) => (
 }));
 const clean = audit.results.filter((r) => r.flaggedReviewers === 0).map((r) => r.agentId);
 const noFunder = new Set(audit.results.flatMap((r) => r.reviewers.filter((x) => x.links.length === 0).map((x) => x.reviewer))).size;
-fs.writeFileSync('docs/data.json', JSON.stringify({ summary: audit.summary, reviewersWithNoFunderFound: noFunder, cleanAgentIds: clean, cleanWithUnknownFunders: audit.results.filter((r) => r.flaggedReviewers === 0 && r.unknownFunders > 0).map((r) => r.agentId), flagged }, null, 1));
+const rows = audit.results.map((r) => ({ agentId: r.agentId, reviewers: r.reviewerCount, linked: r.flaggedReviewers, unknown: r.unknownFunders, status: r.status, memoTx: memos[r.agentId]?.tx ?? null })).sort((a, b) => a.agentId - b.agentId);
+fs.writeFileSync('docs/data.json', JSON.stringify({ summary: audit.summary, reviewersWithNoFunderFound: noFunder, rows, cleanAgentIds: clean, cleanWithUnknownFunders: audit.results.filter((r) => r.flaggedReviewers === 0 && r.unknownFunders > 0).map((r) => r.agentId), flagged }, null, 1));
 console.log('flagged', flagged.length, 'withMemo', flagged.filter((f) => f.memoTx).length);
