@@ -55,9 +55,9 @@ const TOOLS = [
     name: "check_agent_reputation",
     description:
       "Given an ERC-8004 agent id on Arc, report what that agent's reputation " +
-      "score is actually made of: whether its raters were funded by the agent's " +
+      "score is actually made of: whether its reviewers were funded by the agent's " +
       "own owner (directly or through one intermediary wallet), whether the owner " +
-      "rated itself, whether the raters are people or application contracts, and " +
+      "rated itself, whether the reviewers are people or application contracts, and " +
       "whether there is any rating at all. Returns a verdict of NO EVIDENCE, THIN, " +
       "SELF REVIEWED, APP GENERATED, ROUND TRIP, OWNER FUNDED, RING or NO LINK FOUND, with the " +
       "evidence behind it. This describes where money came from. It is not a " +

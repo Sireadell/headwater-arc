@@ -28,7 +28,7 @@
     "roundTripped": 0,
     "rings": [
       {
-        "kind": "one rater, one family of owners",
+        "kind": "one reviewer, one family of owners",
         "source": "0x4e3bcce28caf98a143fd8bd9e4875ccab3e7bbe0",
         "agents": [
           "137",

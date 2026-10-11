@@ -30,7 +30,7 @@
     "roundTripped": 0,
     "rings": [
       {
-        "kind": "one rater, one family of owners",
+        "kind": "one reviewer, one family of owners",
         "source": "0xa3b06cdd9e166b33074154ced7407b42b5093fd5",
         "agents": [
           "209",
@@ -42,7 +42,7 @@
         "raters": 1
       },
       {
-        "kind": "one rater, one family of owners",
+        "kind": "one reviewer, one family of owners",
         "source": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
         "agents": [
           "230",
@@ -54,7 +54,7 @@
         "raters": 1
       },
       {
-        "kind": "one rater, one family of owners",
+        "kind": "one reviewer, one family of owners",
         "source": "0x4e3bcce28caf98a143fd8bd9e4875ccab3e7bbe0",
         "agents": [
           "137",
