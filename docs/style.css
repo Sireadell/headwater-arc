@@ -344,10 +344,44 @@ ol, ul { padding: 0; list-style: none; }
 .made-of{margin-top:34px}
 .table-card{padding:6px 20px}
 .made-table{width:100%;border-collapse:collapse}
-.made-table th{text-align:left;font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);padding:12px 10px;border-bottom:1px solid var(--border)}
+.made-table th{text-align:left;font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);padding:12px 10px;border-bottom:1px solid var(--border)}
 .made-table td{padding:14px 10px;border-bottom:1px solid var(--border-soft);font-size:14px;vertical-align:top}
 .made-table tr:last-child td{border-bottom:0}
 .made-table td.num{font-size:15px;white-space:nowrap;width:90px;color:var(--text)}
 .made-table td:last-child{width:150px;white-space:nowrap}
 .faint{color:var(--text-faint)}
 @media (max-width:700px){.made-table th:nth-child(3),.made-table td:last-child{display:none}.made-table td.num{width:60px}}
+
+/* Smallest text */
+.feed-chip .tag { font-size: 12px; }
+.lvl { font-size: 12px; }
+.flow-node small, .board td::before { font-size: 12px; }
+
+/* Sortable scoreboard headers and phone sort */
+.sort-btn {
+  background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 28px;
+}
+.sort-btn:hover { color: var(--t); }
+.sort-btn::after { content: "\2195"; font-size: 12px; opacity: 0.45; }
+th[aria-sort="ascending"] .sort-btn, th[aria-sort="descending"] .sort-btn { color: var(--t); }
+th[aria-sort="ascending"] .sort-btn::after { content: "\2191"; color: var(--ac); opacity: 1; }
+th[aria-sort="descending"] .sort-btn::after { content: "\2193"; color: var(--ac); opacity: 1; }
+.sort-select { display: none; align-items: center; gap: 10px; margin: 0 0 14px; font-size: 13px; color: var(--tm); }
+.sort-select select {
+  background: var(--s1); border: 1px solid var(--b); color: var(--t); border-radius: 10px;
+  padding: 0 12px; min-height: 40px; font: 14px 'IBM Plex Sans', sans-serif;
+}
+
+@media (max-width: 640px) {
+  .brand, .feed-chip, .navlink { min-height: 40px; }
+  .feed-chip { padding: 4px 10px; }
+  .navlink { display: inline-flex; align-items: center; }
+  a.mono, .flow-addr a, .mid-chip a, a.small, .small a, .own-line a, .feed-who a, .feed-items a, .kv a, .flow-tx a, .mid-links a,
+  .board td a, .foot a, .hero-links a, .note a, .verdict-text a, .sig-desc a, .card-sub a {
+    display: inline-flex; align-items: center; min-height: 32px;
+  }
+  .mid-chip { min-height: 32px; }
+  .chip, .more-btn { min-height: 36px; }
+  .sort-select { display: flex; }
+}

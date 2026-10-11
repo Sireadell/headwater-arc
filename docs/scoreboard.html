@@ -21,10 +21,22 @@
 
     <div class="chips" id="chips" role="group" aria-label="Filter by verdict"></div>
 
+    <label class="sort-select">Sort by
+      <select id="sort-select" aria-label="Sort agents">
+        <option value="default">Verdict (default)</option>
+        <option value="agent:asc">Agent, lowest first</option>
+        <option value="agent:desc">Agent, highest first</option>
+        <option value="reviewers:desc">Reviewers, most first</option>
+        <option value="reviewers:asc">Reviewers, fewest first</option>
+        <option value="reviews:desc">Reviews, most first</option>
+        <option value="reviews:asc">Reviews, fewest first</option>
+      </select>
+    </label>
+
     <div class="card table-card">
       <table class="board">
         <thead>
-          <tr><th scope="col">Agent</th><th scope="col">Verdict</th><th scope="col">Reviewers</th><th scope="col">Reviews</th><th scope="col">Strength</th><th scope="col">Saved on Arc</th></tr>
+          <tr><th scope="col" data-sort="agent"><button type="button" class="sort-btn">Agent</button></th><th scope="col">Verdict</th><th scope="col" data-sort="reviewers"><button type="button" class="sort-btn">Reviewers</button></th><th scope="col" data-sort="reviews"><button type="button" class="sort-btn">Reviews</button></th><th scope="col">Strength</th><th scope="col">Saved on Arc</th></tr>
         </thead>
         <tbody id="rows"><tr><td colspan="6" class="muted">Loading the agents&hellip;</td></tr></tbody>
       </table>
@@ -45,12 +57,47 @@ let agents = [];
 
 const rank = (a) => ORDER.indexOf(a.verdict) === -1 ? 99 : ORDER.indexOf(a.verdict);
 
+let sortKey = null;
+let sortDir = "asc";
+const SORT_VALUE = {
+  agent: (a) => Number(a.agentId),
+  reviewers: (a) => a.distinctRaters,
+  reviews: (a) => a.feedbackCount,
+};
+
 function sorted(list) {
-  return [...list].sort((x, y) =>
+  const byDefault = (x, y) =>
     rank(x) - rank(y)
     || (x.distinctRaters < 3) - (y.distinctRaters < 3)
-    || Number(x.agentId) - Number(y.agentId));
+    || Number(x.agentId) - Number(y.agentId);
+  if (!sortKey) return [...list].sort(byDefault);
+  const val = SORT_VALUE[sortKey];
+  const dir = sortDir === "asc" ? 1 : -1;
+  return [...list].sort((x, y) => (val(x) - val(y)) * dir || byDefault(x, y));
 }
+
+function syncSortUi() {
+  document.querySelectorAll("th[data-sort]").forEach((th) => {
+    th.setAttribute("aria-sort", th.dataset.sort === sortKey ? (sortDir === "asc" ? "ascending" : "descending") : "none");
+  });
+  document.getElementById("sort-select").value = sortKey ? `${sortKey}:${sortDir}` : "default";
+}
+
+document.querySelectorAll("th[data-sort] .sort-btn").forEach((btn) => {
+  btn.onclick = () => {
+    const key = btn.parentElement.dataset.sort;
+    if (sortKey === key) sortDir = sortDir === "asc" ? "desc" : "asc";
+    else { sortKey = key; sortDir = key === "agent" ? "asc" : "desc"; }
+    syncSortUi();
+    drawRows();
+  };
+});
+document.getElementById("sort-select").onchange = (e) => {
+  if (e.target.value === "default") sortKey = null;
+  else [sortKey, sortDir] = e.target.value.split(":");
+  syncSortUi();
+  drawRows();
+};
 
 function drawChips(idx) {
   const counts = idx.counts.byVerdict;
@@ -88,6 +135,7 @@ function drawRows() {
   document.getElementById("sb-note").textContent =
     `All ${fmt(agents.length)} agents with reviews, from our last check. Within each verdict, agents with 3 or more reviewers come first.`;
   drawChips(idx);
+  syncSortUi();
   drawRows();
 })().catch(() => {
   document.getElementById("rows").innerHTML = `<tr><td colspan="6" class="notice">The agent list could not load. Try again in a moment.</td></tr>`;
