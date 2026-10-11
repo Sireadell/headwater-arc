@@ -89,9 +89,12 @@ document.addEventListener("click", (ev) => {
 });
 
 function signalsFor(a) {
+  const back = (a.proof && a.proof.raterPaidOwner) || [];
+  const ownWalletOnly = a.evidence.roundTripped === 0 && back.length > 0 && back.every((d) => d.rater === HEADWATER_WALLET);
   const list = (a.signals || []).map((s) => {
     const known = SIG_NAMES[s.key] || [s.title, "LOW"];
-    return { name: known[0], level: s.triggered ? known[1] : "NOT FOUND", desc: s.desc, triggered: s.triggered };
+    const desc = s.key === "circular_funding" && s.triggered && ownWalletOnly ? `${s.desc} This is Headwater's own wallet, counted as zero.` : s.desc;
+    return { name: known[0], level: s.triggered ? known[1] : "NOT FOUND", desc, triggered: s.triggered };
   });
   list.sort((x, y) => (x.triggered === y.triggered ? (LEVEL_ORDER[x.level] ?? 3) - (LEVEL_ORDER[y.level] ?? 3) : x.triggered ? -1 : 1));
   return list.map((s) => `
@@ -112,7 +115,7 @@ function infoCard(a) {
       ${row("Reviewers", e.distinctRaters)}
       ${row("Reviews", e.feedbackCount)}
       ${row("Average", averageText(e.distinctRaters))}
-      ${row("Paid by the owner", `${paid} of ${e.distinctRaters} reviewers`)}
+      ${row("Paid by the owner", `${paid} of ${e.distinctRaters} ${plural(e.distinctRaters, "reviewer", "reviewers")}`)}
       ${row("Money back to the owner", `${e.roundTripped} ${plural(e.roundTripped, "reviewer", "reviewers")}`)}
       ${row("Game or app programs among reviewers", `${e.contractRaters} of ${e.ratersCheckedForCode} checked`)}
       ${a.proof && a.proof.record ? row("Saved on Arc", txLink(a.proof.record, "view the record")) : ""}
@@ -147,7 +150,7 @@ function renderAgent(a) {
         <div class="sig-list">${signalsFor(a)}</div>
         <p class="note">Signals are context. None of them changes the verdict by itself.</p>
       </div>
-      <p class="note result-basis">Checked ${e.ratersTraced} reviewers and the payments within ${a.limits.fundingHops} steps, using Arc history from block ${from} to ${to}. We found where the money came from for ${e.ratersWithKnownFunder} of ${e.ratersTraced}. ${esc(a.limits.note)}</p>
+      <p class="note result-basis">Checked ${e.ratersTraced} ${plural(e.ratersTraced, "reviewer", "reviewers")} and the payments within ${a.limits.fundingHops} steps, using Arc history from block ${from} to ${to}. We found where the money came from for ${e.ratersWithKnownFunder} of ${e.ratersTraced}. ${esc(a.limits.note)}</p>
     </div>`;
 }
 
