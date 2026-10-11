@@ -161,7 +161,7 @@ document.getElementById("homeIn").onkeydown = (e) => { if (e.key === "Enter") do
   }
 
 
-  setText("hero-fact", `Most AI agents on Arc have no reviews. ${fmtN(none)} of the ${fmtN(total)} registered agents have none.`);
+  setText("hero-fact", `${fmtN(rated)} of the ${fmtN(total)} registered agents already have reviews. Headwater checked every one of them.`);
   setText("split-total", fmtN(total));
   setText("split-note", "checked against Arc payment history");
   document.getElementById("bar-none").style.width = (none / total * 100) + "%";
